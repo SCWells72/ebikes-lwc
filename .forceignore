@@ -143,3 +143,9 @@ force-app/test/**
 
 # Default permission set
 **/permissionsets/sfdcInternalInt__sfdc_scrt2.permissionset-meta.xml
+
+# Added by Illuminated Cloud
+/.illuminatedCloud/
+**/tsconfig*.json
+**/*.tsbuildinfo
+**/eslint.config.mjs

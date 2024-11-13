@@ -46,3 +46,13 @@ $RECYCLE.BIN/
 # UTAM
 pageObjects
 utam-lint.sarif
+
+# Added by Illuminated Cloud
+.localdev/
+/IlluminatedCloud/
+/out/
+target/
+/.illuminatedCloud/
+**/tsconfig*.json
+**/*.tsbuildinfo
+**/eslint.config.mjs
