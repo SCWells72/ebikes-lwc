@@ -49,6 +49,6 @@ describe('c-product-list-item', () => {
         document.body.appendChild(element);
 
         await Promise.resolve();
-        return await expect(element).toBeAccessible();
+        return expect(element).toBeAccessible();
     });
 });

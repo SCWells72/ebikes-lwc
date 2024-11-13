@@ -46,7 +46,7 @@ describe('c-product-filter-accessibility', () => {
         getPicklistValuesMock.emit(mockGetPicklistValues);
 
         await Promise.resolve();
-        return await expect(element).toBeAccessible();
+        return expect(element).toBeAccessible();
     });
 
     it('is accessible when error returned', async () => {
@@ -58,6 +58,6 @@ describe('c-product-filter-accessibility', () => {
         getPicklistValuesMock.error();
 
         await Promise.resolve();
-        return await expect(element).toBeAccessible();
+        return expect(element).toBeAccessible();
     });
 });

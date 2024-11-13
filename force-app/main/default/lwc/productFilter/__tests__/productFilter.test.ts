@@ -26,6 +26,18 @@ import mockGetPicklistValues from './data/getPicklistValues.json';
 
 const getPicklistValuesMock = getPicklistValues as unknown as ic.jest.MockTestWireAdapter;
 
+interface Filters {
+    materials?: string[];
+    categories?: string[];
+    maxPrice?: number;
+    searchKey?: string;
+    levels?: string[];
+}
+
+interface ExpectedFilters {
+    filters?: Filters;
+}
+
 describe('c-product-filter', () => {
     beforeEach(() => {
         // Reset timer mocks
@@ -97,6 +109,7 @@ describe('c-product-filter', () => {
             );
         });
 
+        // eslint-disable-next-line jest/expect-expect
         it('sends messages when checkbox are toggled', async () => {
             const element = createElement<ProductFilter>('c-product-filter', {
                 is: ProductFilter
@@ -179,15 +192,3 @@ describe('c-product-filter', () => {
         );
     });
 });
-
-interface ExpectedFilters {
-    filters?: Filters;
-}
-
-interface Filters {
-    materials?: string[];
-    categories?: string[];
-    maxPrice?: number;
-    searchKey?: string;
-    levels?: string[];
-}

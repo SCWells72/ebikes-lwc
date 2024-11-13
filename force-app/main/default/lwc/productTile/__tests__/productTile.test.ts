@@ -72,6 +72,6 @@ describe('c-product-tile', () => {
         document.body.appendChild(element);
 
         await Promise.resolve();
-        return await expect(element).toBeAccessible();
+        return expect(element).toBeAccessible();
     });
 });

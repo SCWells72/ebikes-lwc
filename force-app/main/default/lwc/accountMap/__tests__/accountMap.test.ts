@@ -121,7 +121,7 @@ describe('c-account-map', () => {
         getRecordMock.emit(mockGetRecordWithAddress);
 
         await Promise.resolve();
-        return await expect(element).toBeAccessible();
+        return expect(element).toBeAccessible();
     });
 
     it('is accessible when showing error', async () => {
@@ -136,6 +136,6 @@ describe('c-account-map', () => {
         getRecordMock.error(mockWireErrorMessage);
 
         await Promise.resolve();
-        return await expect(element).toBeAccessible();
+        return expect(element).toBeAccessible();
     });
 });

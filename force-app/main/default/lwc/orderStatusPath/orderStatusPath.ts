@@ -24,6 +24,12 @@ const FIELD_API_NAME = ORDER_STATUS_FIELD_API_NAME.fieldApiName;
 
 const MANUFACTURING_EVENT_CHANNEL = '/event/Manufacturing_Event__e';
 
+export interface ManufacturingEvent {
+    data: {
+        payload: Manufacturing_Event__e;
+    };
+}
+
 export default class OrderStatusPath extends LightningElement {
     // Page context
     @api recordId: string;
@@ -210,10 +216,3 @@ export default class OrderStatusPath extends LightningElement {
         this.errorMessage = message;
     }
 }
-
-export interface ManufacturingEvent {
-    data: {
-        payload: Manufacturing_Event__e;
-    };
-}
-

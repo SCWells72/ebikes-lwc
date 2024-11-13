@@ -105,6 +105,7 @@ export default class ProductFilter extends LightningElement {
         // @ts-expect-error Where is delayTimeout defined?
         window.clearTimeout(this.delayTimeout);
         // @ts-expect-error Where is delayTimeout defined?
+        // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.delayTimeout = setTimeout(() => {
             // Published ProductsFiltered message
             publish(this.messageContext, PRODUCTS_FILTERED_MESSAGE, <ProductsFiltered__c>{

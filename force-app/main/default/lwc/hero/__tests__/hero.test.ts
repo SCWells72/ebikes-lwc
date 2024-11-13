@@ -209,7 +209,7 @@ describe('c-hero', () => {
         document.body.appendChild(element);
 
         await Promise.resolve();
-        return await expect(element).toBeAccessible();
+        return expect(element).toBeAccessible();
     });
 
     it('is accessible when type video and overlay displayed', async () => {
@@ -225,6 +225,6 @@ describe('c-hero', () => {
         document.body.appendChild(element);
 
         await Promise.resolve();
-        return await expect(element).toBeAccessible();
+        return expect(element).toBeAccessible();
     });
 });

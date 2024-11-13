@@ -7,11 +7,11 @@ import getProducts from '@salesforce/apex/ProductController.getProducts';
 import LightningInput from 'lightning/input';
 
 // Realistic data with multiple records
-// @ts-ignore
+// @ts-expect-error Import of JSON data file
 import mockGetProducts from './data/getProducts.json';
 // An empty list of records to verify the component does something reasonable
 // when there is no data to display
-// @ts-ignore
+// @ts-expect-error Import of JSON data file
 import mockGetProductsNoRecords from './data/getProductsNoRecords.json';
 
 // Mock getContactList Apex wire adapter
@@ -20,6 +20,7 @@ jest.mock(
     () => {
         const {
             createApexTestWireAdapter
+            // eslint-disable-next-line @typescript-eslint/no-require-imports
         } = require('@salesforce/sfdx-lwc-jest');
         return {
             default: createApexTestWireAdapter(jest.fn())

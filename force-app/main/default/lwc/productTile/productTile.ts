@@ -2,6 +2,8 @@
 
 import { LightningElement, api } from 'lwc';
 
+export type ProductSelectedEvent = CustomEvent<string>
+
 /**
  * A presentation component to display a Product__c sObject. The provided
  * Product__c data must contain all fields used by this component.
@@ -43,5 +45,3 @@ export default class ProductTile extends LightningElement {
         event.dataTransfer.setData('product', JSON.stringify(this.product));
     }
 }
-
-export type ProductSelectedEvent = CustomEvent<string>

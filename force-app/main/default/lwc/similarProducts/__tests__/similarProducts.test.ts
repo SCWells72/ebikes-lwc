@@ -6,15 +6,15 @@ import ProductListItem from "c/productListItem";
 import ErrorPanel from "c/errorPanel";
 
 // Mock realistic data for the getRecord adapter
-// @ts-ignore
+// @ts-expect-error Import of JSON data file
 import mockGetRecord from './data/getRecord.json';
 
 // Mock realistic data for the getSimilarProducts adapter
-// @ts-ignore
+// @ts-expect-error Import of JSON data file
 import mockSimilarProducts from './data/similarProducts.json';
 
 // Mock empty data for the getSimilarProducts adapter
-// @ts-ignore
+// @ts-expect-error Import of JSON data file
 import mockSimilarProductsWithoutData from './data/similarProductsWithoutData.json';
 
 // Mock realistic data for the public properties
@@ -39,6 +39,7 @@ jest.mock(
     () => {
         const {
             createApexTestWireAdapter
+            // eslint-disable-next-line @typescript-eslint/no-require-imports
         } = require('@salesforce/sfdx-lwc-jest');
         return {
             default: createApexTestWireAdapter(jest.fn())
@@ -162,7 +163,7 @@ describe('c-similar-products', () => {
         getSimilarProductsMock.emit(mockSimilarProducts);
 
         await Promise.resolve();
-        return await expect(element).toBeAccessible();
+        return expect(element).toBeAccessible();
     });
 
     it('is accessible when no similar products returned', async () => {
@@ -182,7 +183,7 @@ describe('c-similar-products', () => {
         getSimilarProductsMock.emit(mockSimilarProductsWithoutData);
 
         await Promise.resolve();
-        return await expect(element).toBeAccessible();
+        return expect(element).toBeAccessible();
     });
 
     it('is accessible when error returned', async () => {
@@ -198,6 +199,6 @@ describe('c-similar-products', () => {
         getSimilarProductsMock.error(mockWireErrorMessage);
 
         await Promise.resolve();
-        return await expect(element).toBeAccessible();
+        return expect(element).toBeAccessible();
     });
 });
