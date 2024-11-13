@@ -20,7 +20,7 @@ export const NavigationMixin = (Base: any) => {
             _replace = replace;
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-shadow
         [GenerateUrl](_pageReference: PageReference) {}
     };
 };
