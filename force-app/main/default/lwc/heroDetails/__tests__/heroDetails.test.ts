@@ -3,9 +3,7 @@ import HeroDetails from 'c/heroDetails';
 import getRecordInfo from '@salesforce/apex/ProductRecordInfoController.getRecordInfo';
 
 // Mock realistic data for the getRecordInfo adapter
-// @ts-expect-error Import of JSON data file
 import mockGetRecordInfoProduct from "./data/getRecordInfoProduct.json";
-// @ts-expect-error Import of JSON data file
 import mockGetRecordInfoProductFamily from "./data/getRecordInfoProductFamily.json";
 
 // Mock realistic data for the public properties

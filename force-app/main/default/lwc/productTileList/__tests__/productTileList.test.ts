@@ -7,11 +7,9 @@ import getProducts from '@salesforce/apex/ProductController.getProducts';
 import LightningInput from 'lightning/input';
 
 // Realistic data with multiple records
-// @ts-expect-error Import of JSON data file
 import mockGetProducts from './data/getProducts.json';
 // An empty list of records to verify the component does something reasonable
 // when there is no data to display
-// @ts-expect-error Import of JSON data file
 import mockGetProductsNoRecords from './data/getProductsNoRecords.json';
 
 // Mock getContactList Apex wire adapter
@@ -84,7 +82,7 @@ describe('c-product-tile-list', () => {
                     const paginator =
                         element.shadowRoot.querySelector('c-paginator');
                     const currentPage =
-                        parseInt(mockGetProducts.pageNumber, 10) + 1;
+                        mockGetProducts.pageNumber + 1;
                     const regex = new RegExp(
                         `page ${currentPage} of ${totalPages}$`
                     );

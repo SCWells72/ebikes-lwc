@@ -6,15 +6,12 @@ import ProductListItem from "c/productListItem";
 import ErrorPanel from "c/errorPanel";
 
 // Mock realistic data for the getRecord adapter
-// @ts-expect-error Import of JSON data file
 import mockGetRecord from './data/getRecord.json';
 
 // Mock realistic data for the getSimilarProducts adapter
-// @ts-expect-error Import of JSON data file
 import mockSimilarProducts from './data/similarProducts.json';
 
 // Mock empty data for the getSimilarProducts adapter
-// @ts-expect-error Import of JSON data file
 import mockSimilarProductsWithoutData from './data/similarProductsWithoutData.json';
 
 // Mock realistic data for the public properties

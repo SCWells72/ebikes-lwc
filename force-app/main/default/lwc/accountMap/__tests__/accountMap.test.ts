@@ -5,9 +5,7 @@ import LightningMap from 'lightning/map';
 import ErrorPanel from 'c/errorPanel';
 
 // Realistic data with an accounts address details
-// @ts-expect-error Import of JSON data file
 import mockGetRecordWithAddress from "./data/getRecordWithAddress.json";
-// @ts-expect-error Import of JSON data file
 import mockGetRecordWithoutAddress from "./data/getRecordWithoutAddress.json";
 
 const mockRecordId = '0031700000pJRRSAA4';

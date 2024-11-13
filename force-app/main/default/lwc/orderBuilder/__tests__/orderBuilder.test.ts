@@ -9,9 +9,7 @@ import Placeholder from "c/placeholder";
 import ErrorPanel from "c/errorPanel";
 
 // Mock realistic data for the getOrderItems adapter
-// @ts-expect-error Import of JSON data file
 import mockGetOrderItems from "./data/getOrderItems.json";
-// @ts-expect-error Import of JSON data file
 import mockGetOrderItemsEmpty from "./data/getOrderItemsEmpty.json";
 
 // Mock realistic data for the public properties

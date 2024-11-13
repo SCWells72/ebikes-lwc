@@ -23,7 +23,6 @@ import { getPicklistValues } from 'lightning/uiObjectInfoApi';
  * https://blog.mkorman.uk/using-postman-to-explore-salesforce-restful-web-services/
  */
 
-// @ts-expect-error Import of JSON data file
 import mockGetPicklistValues from './data/getPicklistValues.json';
 
 const getPicklistValuesMock = getPicklistValues as unknown as ic.jest.MockTestWireAdapter;

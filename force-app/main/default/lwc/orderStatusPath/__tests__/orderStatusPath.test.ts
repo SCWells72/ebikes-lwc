@@ -6,11 +6,8 @@ import { getRecord, updateRecord } from 'lightning/uiRecordApi';
 import { empApiMock, isEmpEnabled, onError, subscribe } from 'lightning/empApi';
 
 // Mock realistic data
-// @ts-expect-error Import of JSON data file
 import mockGetObjectInfo from './data/getObjectInfo.json';
-// @ts-expect-error Import of JSON data file
 import mockGetPicklistValues from './data/getPicklistValues.json';
-// @ts-expect-error Import of JSON data file
 import mockGetRecord from './data/getRecord.json';
 
 const mockEvent = {
