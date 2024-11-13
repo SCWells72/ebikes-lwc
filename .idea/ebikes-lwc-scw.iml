@@ -18,7 +18,7 @@
     <orderEntry type="jdk" jdkName="IlluminatedCloud (ebikes-lwc-scw/ebikes-lwc-scw)" jdkType="IlluminatedCloud" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="ebikes-lwc-scw/lwc_types" level="project" />
-    <orderEntry type="library" name="@types/node" level="application" />
     <orderEntry type="library" name="@types/jest" level="application" />
+    <orderEntry type="library" name="@types/node" level="application" />
   </component>
 </module>
