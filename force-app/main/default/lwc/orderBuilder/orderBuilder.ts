@@ -40,6 +40,7 @@ function getPrice(orderItem: Order_Item__c, quantity: number): number {
  * Calculates the quantity and price of all Order_Item__c SObjects.
  */
 function calculateOrderSummary(orderItems: Order_Item__c[]) {
+    // noinspection UnnecessaryLocalVariableJS
     const summary = orderItems.reduce(
         (acc, orderItem) => {
             const quantity = getQuantity(orderItem);

@@ -2,7 +2,7 @@
  * Accessibility tests reside in a different test file in this case
  * because there's an open issue on jest (https://github.com/facebook/jest/issues/8726)
  * because of which fake timers leak into all the tests in the same file,
- * while Axe doen't work when using fake timers.
+ * while Axe doesn't work when using fake timers.
  **/
 import { createElement } from 'lwc';
 import ProductFilter from 'c/productFilter';

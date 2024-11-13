@@ -97,7 +97,7 @@ export default class OrderStatusPath extends LightningElement {
             this.reportError('EMP API error', error);
         });
 
-        // Subscribe to Manufacturing Event plaform event
+        // Subscribe to Manufacturing Event platform event
         try {
             this.subscription = await subscribe(
                 MANUFACTURING_EVENT_CHANNEL,
@@ -130,7 +130,7 @@ export default class OrderStatusPath extends LightningElement {
         event.preventDefault();
         event.stopPropagation();
 
-        // Ignore clicks on curent value
+        // Ignore clicks on current value
         const { value } = (<HTMLElement>event.currentTarget).dataset;
         if (value !== this.picklistValue) {
             // noinspection JSIgnoredPromiseFromCall

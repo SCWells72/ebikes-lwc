@@ -153,7 +153,7 @@ describe('c-order-status-path', () => {
     });
 
     describe('empApi', () => {
-        it('updates path when plaform event is received', async () => {
+        it('updates path when platform event is received', async () => {
             // Create initial element
             const element = createElement('c-order-status-path', {
                 is: OrderStatusPath
