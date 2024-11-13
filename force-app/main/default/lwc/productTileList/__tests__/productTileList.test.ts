@@ -4,12 +4,15 @@ import { publish } from 'lightning/messageService';
 import PRODUCTS_FILTERED_MESSAGE from '@salesforce/messageChannel/ProductsFiltered__c';
 import PRODUCT_SELECTED_MESSAGE from '@salesforce/messageChannel/ProductSelected__c';
 import getProducts from '@salesforce/apex/ProductController.getProducts';
+import LightningInput from 'lightning/input';
 
 // Realistic data with multiple records
-const mockGetProducts = require('./data/getProducts.json');
+// @ts-ignore
+import mockGetProducts from './data/getProducts.json';
 // An empty list of records to verify the component does something reasonable
 // when there is no data to display
-const mockGetProductsNoRecords = require('./data/getProductsNoRecords.json');
+// @ts-ignore
+import mockGetProductsNoRecords from './data/getProductsNoRecords.json';
 
 // Mock getContactList Apex wire adapter
 jest.mock(
@@ -25,6 +28,8 @@ jest.mock(
     { virtual: true }
 );
 
+const getProductsMock = getProducts as unknown as jest.MockInstance<any, any> & ic.jest.MockTestWireAdapter;
+
 describe('c-product-tile-list', () => {
     afterEach(() => {
         // The jsdom instance is shared across test cases in a single file so reset the DOM
@@ -39,7 +44,7 @@ describe('c-product-tile-list', () => {
                 is: ProductTileList
             });
             document.body.appendChild(element);
-            getProducts.emit(mockGetProducts);
+            getProductsMock.emit(mockGetProducts);
 
             // Return a promise to wait for any asynchronous DOM updates.
             return Promise.resolve().then(() => {
@@ -66,7 +71,7 @@ describe('c-product-tile-list', () => {
                 is: ProductTileList
             });
             document.body.appendChild(element);
-            getProducts.emit(mockGetProducts);
+            getProductsMock.emit(mockGetProducts);
 
             return Promise.resolve()
                 .then(() => {
@@ -104,7 +109,7 @@ describe('c-product-tile-list', () => {
                 is: ProductTileList
             });
             document.body.appendChild(element);
-            getProducts.emit(mockGetProducts);
+            getProductsMock.emit(mockGetProducts);
 
             // Return a promise to wait for any asynchronous DOM updates.
             return Promise.resolve()
@@ -114,7 +119,7 @@ describe('c-product-tile-list', () => {
                     paginator.dispatchEvent(new CustomEvent('next'));
                 })
                 .then(() => {
-                    const { pageNumber } = getProducts.getLastConfig();
+                    const { pageNumber } = getProductsMock.getLastConfig();
                     // we've fired a single 'next' event so increment the original pageNumber
                     expect(pageNumber).toBe(mockGetProducts.pageNumber + 1);
                 });
@@ -126,7 +131,7 @@ describe('c-product-tile-list', () => {
                 is: ProductTileList
             });
             document.body.appendChild(element);
-            getProducts.emit(mockGetProducts);
+            getProductsMock.emit(mockGetProducts);
 
             return Promise.resolve().then(() => {
                 const productTiles =
@@ -140,7 +145,7 @@ describe('c-product-tile-list', () => {
                 is: ProductTileList
             });
             document.body.appendChild(element);
-            getProducts.emit(mockGetProducts);
+            getProductsMock.emit(mockGetProducts);
 
             return Promise.resolve().then(() => {
                 const productTile =
@@ -161,7 +166,7 @@ describe('c-product-tile-list', () => {
                 is: ProductTileList
             });
             document.body.appendChild(element);
-            getProducts.emit(mockGetProductsNoRecords);
+            getProductsMock.emit(mockGetProductsNoRecords);
 
             return Promise.resolve().then(() => {
                 const paginator =
@@ -177,7 +182,7 @@ describe('c-product-tile-list', () => {
                 is: ProductTileList
             });
             document.body.appendChild(element);
-            getProducts.emit(mockGetProductsNoRecords);
+            getProductsMock.emit(mockGetProductsNoRecords);
 
             return Promise.resolve().then(() => {
                 const placeholder =
@@ -196,7 +201,7 @@ describe('c-product-tile-list', () => {
                 is: ProductTileList
             });
             document.body.appendChild(element);
-            getProducts.error();
+            getProductsMock.error();
             return Promise.resolve()
                 .then(() => {
                     const errorPanel =
@@ -219,22 +224,22 @@ describe('c-product-tile-list', () => {
         it('updates getProducts @wire with searchKey as filter when search bar changes', () => {
             const input = 'foo';
             const expected = { searchKey: input };
-            const element = createElement('c-product-tile-list', {
+            const element = createElement<ProductTileList>('c-product-tile-list', {
                 is: ProductTileList
             });
             element.searchBarIsVisible = true;
             document.body.appendChild(element);
-            getProducts.emit(mockGetProducts);
+            getProductsMock.emit(mockGetProducts);
 
             return Promise.resolve()
                 .then(() => {
                     const searchBar =
-                        element.shadowRoot.querySelector('.search-bar');
+                        element.shadowRoot.querySelector<LightningInput>('.search-bar');
                     searchBar.value = input;
                     searchBar.dispatchEvent(new CustomEvent('change'));
                 })
                 .then(() => {
-                    const { filters } = getProducts.getLastConfig();
+                    const { filters } = getProductsMock.getLastConfig();
                     expect(filters).toEqual(expected);
                 });
         });
@@ -255,7 +260,7 @@ describe('c-product-tile-list', () => {
 
             // Check that wire gets called with new filters
             return Promise.resolve().then(() => {
-                const { filters } = getProducts.getLastConfig();
+                const { filters } = getProductsMock.getLastConfig();
                 expect(filters).toEqual(mockMessage.filters);
             });
         });
@@ -267,7 +272,7 @@ describe('c-product-tile-list', () => {
         });
 
         document.body.appendChild(element);
-        getProducts.emit(mockGetProducts);
+        getProductsMock.emit(mockGetProducts);
 
         return Promise.resolve().then(() => expect(element).toBeAccessible());
     });
@@ -278,7 +283,7 @@ describe('c-product-tile-list', () => {
         });
 
         document.body.appendChild(element);
-        getProducts.emit(mockGetProductsNoRecords);
+        getProductsMock.emit(mockGetProductsNoRecords);
 
         return Promise.resolve().then(() => expect(element).toBeAccessible());
     });
@@ -289,7 +294,7 @@ describe('c-product-tile-list', () => {
         });
 
         document.body.appendChild(element);
-        getProducts.error();
+        getProductsMock.error();
 
         return Promise.resolve().then(() => expect(element).toBeAccessible());
     });

@@ -22,7 +22,11 @@ import { getPicklistValues } from 'lightning/uiObjectInfoApi';
  * Community-provided instructions for access Salesforce REST resources is at
  * https://blog.mkorman.uk/using-postman-to-explore-salesforce-restful-web-services/
  */
-const mockGetPicklistValues = require('./data/getPicklistValues.json');
+
+// @ts-expect-error Import of JSON data file
+import mockGetPicklistValues from './data/getPicklistValues.json';
+
+const getPicklistValuesMock = getPicklistValues as unknown as ic.jest.MockTestWireAdapter;
 
 describe('c-product-filter-accessibility', () => {
     afterEach(() => {
@@ -33,25 +37,27 @@ describe('c-product-filter-accessibility', () => {
         // Prevent data saved on mocks from leaking between tests
         jest.clearAllMocks();
     });
-    it('is accessible when picklist values returned', () => {
+    it('is accessible when picklist values returned', async () => {
         const element = createElement('c-product-filter', {
             is: ProductFilter
         });
         document.body.appendChild(element);
 
-        getPicklistValues.emit(mockGetPicklistValues);
+        getPicklistValuesMock.emit(mockGetPicklistValues);
 
-        return Promise.resolve().then(() => expect(element).toBeAccessible());
+        await Promise.resolve();
+        return await expect(element).toBeAccessible();
     });
 
-    it('is accessible when error returned', () => {
+    it('is accessible when error returned', async () => {
         const element = createElement('c-product-filter', {
             is: ProductFilter
         });
         document.body.appendChild(element);
 
-        getPicklistValues.error();
+        getPicklistValuesMock.error();
 
-        return Promise.resolve().then(() => expect(element).toBeAccessible());
+        await Promise.resolve();
+        return await expect(element).toBeAccessible();
     });
 });

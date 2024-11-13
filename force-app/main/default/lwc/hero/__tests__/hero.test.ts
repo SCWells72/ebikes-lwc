@@ -1,6 +1,7 @@
 import { createElement } from 'lwc';
 import Hero from 'c/hero';
 import IMAGE_URL from '@salesforce/resourceUrl/bike_assets';
+import HeroDetails from "c/heroDetails";
 
 // Mock realistic data for the public properties
 const mockTitle = 'Title';
@@ -24,8 +25,9 @@ describe('c-hero', () => {
         }
     });
 
-    it('displays an image in the hero when the type is image', () => {
-        const element = createElement('c-hero', {
+    it('displays an image in the hero when the type is image', async () => {
+        // noinspection DuplicatedCode
+        const element = createElement<Hero>('c-hero', {
             is: Hero
         });
         element.title = mockTitle;
@@ -44,19 +46,19 @@ describe('c-hero', () => {
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
         // ending the test and fail the test if the promise rejects.
-        return Promise.resolve().then(() => {
-            // Select elements for validation
-            const imageEl = element.shadowRoot.querySelector('img');
-            expect(imageEl).not.toBeNull();
-            // Verify that the URL returned matches, in the context of the test, the domain will render as http://localhost/
-            expect(imageEl.src).toBe(
-                `http://localhost/${IMAGE_URL}${mockResourceUrl}`
-            );
-        });
+        await Promise.resolve();
+        // Select elements for validation
+        const imageEl = element.shadowRoot.querySelector('img');
+        expect(imageEl).not.toBeNull();
+        // Verify that the URL returned matches, in the context of the test, the domain will render as http://localhost/
+        expect(imageEl.src).toBe(
+            `http://localhost/${IMAGE_URL}${mockResourceUrl}`
+        );
     });
 
-    it('displays an video in the hero when the type is video', () => {
-        const element = createElement('c-hero', {
+    it('displays an video in the hero when the type is video', async () => {
+        // noinspection DuplicatedCode
+        const element = createElement<Hero>('c-hero', {
             is: Hero
         });
         element.title = mockTitle;
@@ -68,17 +70,16 @@ describe('c-hero', () => {
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
         // ending the test and fail the test if the promise rejects.
-        return Promise.resolve().then(() => {
-            // Select elements for validation
-            const sourceEl = element.shadowRoot.querySelector('source');
-            expect(sourceEl).not.toBeNull();
-            // Verify that the URL returned matches, in the context of the test, the domain will render as http://localhost/
-            expect(sourceEl.src).toBe(`http://localhost/${mockResourceUrl}`);
-        });
+        await Promise.resolve();
+        // Select elements for validation
+        const sourceEl = element.shadowRoot.querySelector('source');
+        expect(sourceEl).not.toBeNull();
+        // Verify that the URL returned matches, in the context of the test, the domain will render as http://localhost/
+        expect(sourceEl.src).toBe(`http://localhost/${mockResourceUrl}`);
     });
 
-    it('displays an overlay', () => {
-        const element = createElement('c-hero', {
+    it('displays an overlay', async () => {
+        const element = createElement<Hero>('c-hero', {
             is: Hero
         });
         element.title = mockTitle;
@@ -89,16 +90,15 @@ describe('c-hero', () => {
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
         // ending the test and fail the test if the promise rejects.
-        return Promise.resolve().then(() => {
-            // Select elements for validation
-            const divEl = element.shadowRoot.querySelector('div');
-            expect(divEl).not.toBeNull();
-            expect(divEl.style.opacity).toBe('0.5');
-        });
+        await Promise.resolve();
+        // Select elements for validation
+        const divEl = element.shadowRoot.querySelector('div');
+        expect(divEl).not.toBeNull();
+        expect(divEl.style.opacity).toBe('0.5');
     });
 
-    it('displays the hero details component positioned left', () => {
-        const element = createElement('c-hero', {
+    it('displays the hero details component positioned left', async () => {
+        const element = createElement<Hero>('c-hero', {
             is: Hero
         });
         element.title = mockTitle;
@@ -112,26 +112,24 @@ describe('c-hero', () => {
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
         // ending the test and fail the test if the promise rejects.
-        return Promise.resolve().then(() => {
-            // Select elements for validation
-            const heroDetailsEL =
-                element.shadowRoot.querySelector('c-hero-details');
-            expect(heroDetailsEL).not.toBeNull();
-            expect(
-                heroDetailsEL.classList.contains('c-hero-center-left')
-            ).toBeTruthy();
-            expect(heroDetailsEL.title).toBe(mockTitle);
-            expect(heroDetailsEL.slogan).toBe(mockSlogan);
-            expect(heroDetailsEL.recordName).toBe(
-                mockButtonClickProductOrFamilyName
-            );
-            const spanEl = element.shadowRoot.querySelector('span');
-            expect(spanEl.textContent).toBe(mockButtonText);
-        });
+        await Promise.resolve();
+        // Select elements for validation
+        const heroDetailsEL = element.shadowRoot.querySelector<HeroDetails>('c-hero-details');
+        expect(heroDetailsEL).not.toBeNull();
+        expect(
+            heroDetailsEL.classList.contains('c-hero-center-left')
+        ).toBeTruthy();
+        expect(heroDetailsEL.title).toBe(mockTitle);
+        expect(heroDetailsEL.slogan).toBe(mockSlogan);
+        expect(heroDetailsEL.recordName).toBe(
+            mockButtonClickProductOrFamilyName
+        );
+        const spanEl = element.shadowRoot.querySelector('span');
+        expect(spanEl.textContent).toBe(mockButtonText);
     });
 
-    it('displays the hero details component positioned right', () => {
-        const element = createElement('c-hero', {
+    it('displays the hero details component positioned right', async () => {
+        const element = createElement<Hero>('c-hero', {
             is: Hero
         });
         element.title = mockTitle;
@@ -145,26 +143,24 @@ describe('c-hero', () => {
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
         // ending the test and fail the test if the promise rejects.
-        return Promise.resolve().then(() => {
-            // Select elements for validation
-            const heroDetailsEL =
-                element.shadowRoot.querySelector('c-hero-details');
-            expect(heroDetailsEL).not.toBeNull();
-            expect(
-                heroDetailsEL.classList.contains('c-hero-center-right')
-            ).toBeTruthy();
-            expect(heroDetailsEL.title).toBe(mockTitle);
-            expect(heroDetailsEL.slogan).toBe(mockSlogan);
-            expect(heroDetailsEL.recordName).toBe(
-                mockButtonClickProductOrFamilyName
-            );
-            const spanEl = element.shadowRoot.querySelector('span');
-            expect(spanEl.textContent).toBe(mockButtonText);
-        });
+        await Promise.resolve();
+        // Select elements for validation
+        const heroDetailsEL = element.shadowRoot.querySelector<HeroDetails>('c-hero-details');
+        expect(heroDetailsEL).not.toBeNull();
+        expect(
+            heroDetailsEL.classList.contains('c-hero-center-right')
+        ).toBeTruthy();
+        expect(heroDetailsEL.title).toBe(mockTitle);
+        expect(heroDetailsEL.slogan).toBe(mockSlogan);
+        expect(heroDetailsEL.recordName).toBe(
+            mockButtonClickProductOrFamilyName
+        );
+        const spanEl = element.shadowRoot.querySelector('span');
+        expect(spanEl.textContent).toBe(mockButtonText);
     });
 
-    it('displays the hero details component positioned center', () => {
-        const element = createElement('c-hero', {
+    it('displays the hero details component positioned center', async () => {
+        const element = createElement<Hero>('c-hero', {
             is: Hero
         });
         element.title = mockTitle;
@@ -177,26 +173,25 @@ describe('c-hero', () => {
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
         // ending the test and fail the test if the promise rejects.
-        return Promise.resolve().then(() => {
-            // Select elements for validation
-            const heroDetailsEL =
-                element.shadowRoot.querySelector('c-hero-details');
-            expect(heroDetailsEL).not.toBeNull();
-            expect(
-                heroDetailsEL.classList.contains('c-hero-center-default')
-            ).toBeTruthy();
-            expect(heroDetailsEL.title).toBe(mockTitle);
-            expect(heroDetailsEL.slogan).toBe(mockSlogan);
-            expect(heroDetailsEL.recordName).toBe(
-                mockButtonClickProductOrFamilyName
-            );
-            const spanEl = element.shadowRoot.querySelector('span');
-            expect(spanEl.textContent).toBe(mockButtonText);
-        });
+        await Promise.resolve();
+        // Select elements for validation
+        const heroDetailsEL = element.shadowRoot.querySelector<HeroDetails>('c-hero-details');
+        expect(heroDetailsEL).not.toBeNull();
+        expect(
+            heroDetailsEL.classList.contains('c-hero-center-default')
+        ).toBeTruthy();
+        expect(heroDetailsEL.title).toBe(mockTitle);
+        expect(heroDetailsEL.slogan).toBe(mockSlogan);
+        expect(heroDetailsEL.recordName).toBe(
+            mockButtonClickProductOrFamilyName
+        );
+        const spanEl = element.shadowRoot.querySelector('span');
+        expect(spanEl.textContent).toBe(mockButtonText);
     });
 
-    it('is accessible when type image and overlay displayed', () => {
-        const element = createElement('c-hero', {
+    it('is accessible when type image and overlay displayed', async () => {
+        // noinspection DuplicatedCode
+        const element = createElement<Hero>('c-hero', {
             is: Hero
         });
 
@@ -213,11 +208,13 @@ describe('c-hero', () => {
             mockButtonClickProductOrFamilyName;
         document.body.appendChild(element);
 
-        return Promise.resolve().then(() => expect(element).toBeAccessible());
+        await Promise.resolve();
+        return await expect(element).toBeAccessible();
     });
 
-    it('is accessible when type video and overlay displayed', () => {
-        const element = createElement('c-hero', {
+    it('is accessible when type video and overlay displayed', async () => {
+        // noinspection DuplicatedCode
+        const element = createElement<Hero>('c-hero', {
             is: Hero
         });
 
@@ -227,6 +224,7 @@ describe('c-hero', () => {
         element.internalResource = mockInternalResource;
         document.body.appendChild(element);
 
-        return Promise.resolve().then(() => expect(element).toBeAccessible());
+        await Promise.resolve();
+        return await expect(element).toBeAccessible();
     });
 });

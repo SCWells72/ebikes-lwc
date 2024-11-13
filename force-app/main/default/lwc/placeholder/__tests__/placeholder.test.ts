@@ -20,13 +20,14 @@ describe('c-placeholder', () => {
         expect(img.src).toMatch(/\/bike_assets\//);
     });
 
-    it('is accessible', () => {
+    it('is accessible', async () => {
         const element = createElement('c-placeholder', {
             is: Placeholder
         });
 
         document.body.appendChild(element);
 
-        return Promise.resolve().then(() => expect(element).toBeAccessible());
+        await Promise.resolve();
+        return await expect(element).toBeAccessible();
     });
 });

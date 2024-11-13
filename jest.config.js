@@ -5,7 +5,7 @@ setupFilesAfterEnv.push('<rootDir>/jest-sa11y-setup.js');
 
 module.exports = {
     ...jestConfig,
-    testRegex: '/__tests__/.*.test.js$',
+    testRegex: '/__tests__/.*.test.ts$',
     moduleNameMapper: {
         '^@salesforce/apex$': '<rootDir>/force-app/test/jest-mocks/apex',
         '^lightning/navigation$':

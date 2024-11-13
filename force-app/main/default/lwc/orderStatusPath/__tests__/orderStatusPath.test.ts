@@ -2,12 +2,17 @@ import { createElement } from 'lwc';
 import OrderStatusPath from 'c/orderStatusPath';
 import { getObjectInfo, getPicklistValues } from 'lightning/uiObjectInfoApi';
 import { getRecord, updateRecord } from 'lightning/uiRecordApi';
-import { isEmpEnabled, onError, subscribe, empApiMock } from 'lightning/empApi';
+// @ts-expect-error Not sure how to get TSC to pick this up from jest.config.js
+import { empApiMock, isEmpEnabled, onError, subscribe } from 'lightning/empApi';
 
 // Mock realistic data
-const mockGetObjectInfo = require('./data/getObjectInfo.json');
-const mockGetPicklistValues = require('./data/getPicklistValues.json');
-const mockGetRecord = require('./data/getRecord.json');
+// @ts-expect-error Import of JSON data file
+import mockGetObjectInfo from './data/getObjectInfo.json';
+// @ts-expect-error Import of JSON data file
+import mockGetPicklistValues from './data/getPicklistValues.json';
+// @ts-expect-error Import of JSON data file
+import mockGetRecord from './data/getRecord.json';
+
 const mockEvent = {
     data: {
         payload: {
@@ -16,6 +21,12 @@ const mockEvent = {
         }
     }
 };
+
+const getObjectInfoMock = getObjectInfo as unknown as ic.jest.MockTestWireAdapter;
+const getPicklistValuesMock = getPicklistValues as unknown as ic.jest.MockTestWireAdapter;
+const getRecordMock = getRecord as unknown as ic.jest.MockTestWireAdapter;
+const updateRecordMock = updateRecord as unknown as ic.jest.MockTestWireAdapter & jest.MockInstance<any, any>;
+const subscribeMock = subscribe as unknown as ic.jest.MockTestWireAdapter & jest.MockInstance<any, any>;
 
 describe('c-order-status-path', () => {
     afterEach(() => {
@@ -45,26 +56,26 @@ describe('c-order-status-path', () => {
         document.body.appendChild(element);
 
         // Emit data from @wire
-        getObjectInfo.emit(mockGetObjectInfo);
-        getPicklistValues.emit(mockGetPicklistValues);
-        getRecord.emit(mockGetRecord);
+        getObjectInfoMock.emit(mockGetObjectInfo);
+        getPicklistValuesMock.emit(mockGetPicklistValues);
+        getRecordMock.emit(mockGetRecord);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
 
         // Check path items and values
-        const pathItems = element.shadowRoot.querySelectorAll('li a');
+        const pathItems = element.shadowRoot.querySelectorAll<HTMLAnchorElement>('li a');
         const pathItemValues = [];
         pathItems.forEach((pathItemElement) => {
             pathItemValues.push(pathItemElement.dataset.value);
         });
         const expectedValues = mockGetPicklistValues.values.map(
-            (item) => item.value
+            (item: { value: any; }) => item.value
         );
         expect(pathItemValues).toStrictEqual(expectedValues);
 
         // Check current selection
-        const selectedItem = element.shadowRoot.querySelector(
+        const selectedItem = element.shadowRoot.querySelector<HTMLAnchorElement>(
             'li.slds-is-current a'
         );
         expect(selectedItem).not.toBeNull();
@@ -81,36 +92,36 @@ describe('c-order-status-path', () => {
         document.body.appendChild(element);
 
         // Emit data from @wire
-        getObjectInfo.emit(mockGetObjectInfo);
-        getPicklistValues.emit(mockGetPicklistValues);
-        getRecord.emit(mockGetRecord);
+        getObjectInfoMock.emit(mockGetObjectInfo);
+        getPicklistValuesMock.emit(mockGetPicklistValues);
+        getRecordMock.emit(mockGetRecord);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
 
         // Click on a path item
-        const pathItems = element.shadowRoot.querySelectorAll('li a');
+        const pathItems = element.shadowRoot.querySelectorAll<HTMLAnchorElement>('li a');
         pathItems[3].click();
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
 
         // Validate updateRecord call
-        expect(updateRecord).toHaveBeenCalled();
-        expect(updateRecord.mock.calls[0][0].fields.Status__c).toEqual(
+        expect(updateRecordMock).toHaveBeenCalled();
+        expect(updateRecordMock.mock.calls[0][0].fields.Status__c).toEqual(
             mockGetPicklistValues.values[3].value
         );
     });
 
     it("displays an error when picklist values can't be retrieved", async () => {
         // Create initial element
-        const element = createElement('c-order-status-path', {
+        const element = createElement<OrderStatusPath>('c-order-status-path', {
             is: OrderStatusPath
         });
         document.body.appendChild(element);
 
         // Emit error from @wire
-        getPicklistValues.error();
+        getPicklistValuesMock.error();
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
@@ -131,7 +142,7 @@ describe('c-order-status-path', () => {
         document.body.appendChild(element);
 
         // Emit error from @wire
-        getRecord.error();
+        getRecordMock.error();
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
@@ -153,19 +164,19 @@ describe('c-order-status-path', () => {
             document.body.appendChild(element);
 
             // Emit data from @wire
-            getObjectInfo.emit(mockGetObjectInfo);
-            getPicklistValues.emit(mockGetPicklistValues);
-            getRecord.emit(mockGetRecord);
+            getObjectInfoMock.emit(mockGetObjectInfo);
+            getPicklistValuesMock.emit(mockGetPicklistValues);
+            getRecordMock.emit(mockGetRecord);
 
             // Wait for any asynchronous DOM updates
             await flushPromises();
 
             // Validate EMP subscribe call
-            expect(subscribe).toHaveBeenCalled();
-            expect(subscribe.mock.calls[0][0]).toEqual(
+            expect(subscribeMock).toHaveBeenCalled();
+            expect(subscribeMock.mock.calls[0][0]).toEqual(
                 '/event/Manufacturing_Event__e'
             );
-            expect(subscribe.mock.calls[0][1]).toEqual(-1);
+            expect(subscribeMock.mock.calls[0][1]).toEqual(-1);
 
             // Wait for any asynchronous DOM updates
             await flushPromises();
@@ -177,8 +188,8 @@ describe('c-order-status-path', () => {
             await flushPromises();
 
             // Validate updateRecord call
-            expect(updateRecord).toHaveBeenCalled();
-            expect(updateRecord.mock.calls[0][0].fields.Status__c).toEqual(
+            expect(updateRecordMock).toHaveBeenCalled();
+            expect(updateRecordMock.mock.calls[0][0].fields.Status__c).toEqual(
                 mockGetPicklistValues.values[3].value
             );
         });

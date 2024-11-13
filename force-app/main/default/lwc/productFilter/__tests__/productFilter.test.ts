@@ -3,6 +3,8 @@ import ProductFilter from 'c/productFilter';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 import { publish } from 'lightning/messageService';
 import PRODUCTS_FILTERED_MESSAGE from '@salesforce/messageChannel/ProductsFiltered__c';
+import LightningSlider from 'lightning/slider';
+import LightningInput from 'lightning/input';
 
 /*
  * Import a snapshot of getPicklistValues' response for functional verification. This eliminates
@@ -18,7 +20,11 @@ import PRODUCTS_FILTERED_MESSAGE from '@salesforce/messageChannel/ProductsFilter
  * Community-provided instructions for access Salesforce REST resources is at
  * https://blog.mkorman.uk/using-postman-to-explore-salesforce-restful-web-services/
  */
-const mockGetPicklistValues = require('./data/getPicklistValues.json');
+
+// @ts-expect-error Import of JSON data file
+import mockGetPicklistValues from './data/getPicklistValues.json';
+
+const getPicklistValuesMock = getPicklistValues as unknown as ic.jest.MockTestWireAdapter;
 
 describe('c-product-filter', () => {
     beforeEach(() => {
@@ -43,7 +49,7 @@ describe('c-product-filter', () => {
             });
             document.body.appendChild(element);
 
-            const slider = element.shadowRoot.querySelector('lightning-slider');
+            const slider = element.shadowRoot.querySelector<LightningSlider>('lightning-slider');
             slider.value = expectedPrice;
             slider.dispatchEvent(new CustomEvent('change'));
             // Run timers eg setTimeout()
@@ -71,7 +77,7 @@ describe('c-product-filter', () => {
             document.body.appendChild(element);
 
             const searchInput =
-                element.shadowRoot.querySelector('lightning-input');
+                element.shadowRoot.querySelector<LightningInput>('lightning-input');
             searchInput.value = expectedSearchKey;
             searchInput.dispatchEvent(new CustomEvent('change'));
             // Run timers eg setTimeout()
@@ -91,17 +97,16 @@ describe('c-product-filter', () => {
             );
         });
 
-        // eslint-disable-next-line jest/expect-expect
-        it('sends messages when checkbox are toggled', () => {
-            const element = createElement('c-product-filter', {
+        it('sends messages when checkbox are toggled', async () => {
+            const element = createElement<ProductFilter>('c-product-filter', {
                 is: ProductFilter
             });
             document.body.appendChild(element);
 
-            getPicklistValues.emit(mockGetPicklistValues);
+            getPicklistValuesMock.emit(mockGetPicklistValues);
 
             // Prepare expected filter values with default filters
-            const expectedFilters = {
+            const expectedFilters: ExpectedFilters = {
                 filters: {
                     categories: ['MockValue'],
                     levels: ['MockValue'],
@@ -115,23 +120,17 @@ describe('c-product-filter', () => {
             // will automatically wait for the Promise chain to complete before
             // ending the test and fail the test if the promise ends in the
             // rejected state
-            return Promise.resolve()
-                .then(() => {
-                    expectedFilters.filters.categories = [];
-                    verifyFilterToggle(element, 'categories', expectedFilters);
-                })
-                .then(() => {
-                    expectedFilters.filters.materials = [];
-                    verifyFilterToggle(element, 'materials', expectedFilters);
-                })
-                .then(() => {
-                    expectedFilters.filters.levels = [];
-                    verifyFilterToggle(element, 'levels', expectedFilters);
-                });
+            await Promise.resolve();
+            expectedFilters.filters.categories = [];
+            verifyFilterToggle(element, 'categories', expectedFilters);
+            expectedFilters.filters.materials = [];
+            verifyFilterToggle(element, 'materials', expectedFilters);
+            expectedFilters.filters.levels = [];
+            verifyFilterToggle(element, 'levels', expectedFilters);
         });
 
-        function verifyFilterToggle(element, filterName, expectedFilters) {
-            const checkbox = element.shadowRoot.querySelector(
+        function verifyFilterToggle(element: ProductFilter, filterName: string, expectedFilters: ExpectedFilters) {
+            const checkbox = element.shadowRoot.querySelector<HTMLInputElement>(
                 `[data-filter="${filterName}"]`
             );
             checkbox.checked = false;
@@ -147,39 +146,48 @@ describe('c-product-filter', () => {
     });
 
     describe('getPicklistValues @wire error', () => {
-        it('shows error message elements', () => {
-            const element = createElement('c-product-filter', {
+        it('shows error message elements', async () => {
+            const element = createElement<ProductFilter>('c-product-filter', {
                 is: ProductFilter
             });
             document.body.appendChild(element);
 
-            getPicklistValues.error();
+            getPicklistValuesMock.error();
 
-            return Promise.resolve().then(() => {
-                const messages =
-                    element.shadowRoot.querySelectorAll('c-error-panel');
-                // One error message per @wire
-                expect(messages).toHaveLength(3);
-            });
+            await Promise.resolve();
+            const messages = element.shadowRoot.querySelectorAll('c-error-panel');
+            // One error message per @wire
+            expect(messages).toHaveLength(3);
         });
 
         it.each(['categories', 'materials', 'levels'])(
             'does not render %s input options',
-            (type) => {
-                const element = createElement('c-product-filter', {
+            async (type) => {
+                const element = createElement<ProductFilter>('c-product-filter', {
                     is: ProductFilter
                 });
                 document.body.appendChild(element);
 
-                getPicklistValues.error();
+                getPicklistValuesMock.error();
 
-                return Promise.resolve().then(() => {
-                    const input = element.shadowRoot.querySelector(
-                        `[data-filter="${type}"]`
-                    );
-                    expect(input).toBeNull();
-                });
+                await Promise.resolve();
+                const input = element.shadowRoot.querySelector(
+                    `[data-filter="${type}"]`
+                );
+                expect(input).toBeNull();
             }
         );
     });
 });
+
+interface ExpectedFilters {
+    filters?: Filters;
+}
+
+interface Filters {
+    materials?: string[];
+    categories?: string[];
+    maxPrice?: number;
+    searchKey?: string;
+    levels?: string[];
+}

@@ -1,3 +1,5 @@
+// noinspection LocalVariableNamingConventionJS
+
 import { reduceErrors } from 'c/ldsUtils';
 
 describe('c-lds-utils', () => {

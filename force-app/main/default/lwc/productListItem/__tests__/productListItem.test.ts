@@ -1,6 +1,7 @@
 import { createElement } from 'lwc';
 import ProductListItem from 'c/productListItem';
 import { getNavigateCalledWith } from 'lightning/navigation';
+import LightningButton from "lightning/button";
 
 describe('c-product-list-item', () => {
     afterEach(() => {
@@ -12,7 +13,7 @@ describe('c-product-list-item', () => {
 
     it('navigates to record page when View Details button clicked', () => {
         const expectedId = 'expectedId';
-        const element = createElement('c-product-list-item', {
+        const element = createElement<ProductListItem>('c-product-list-item', {
             is: ProductListItem
         });
         element.product = {
@@ -24,7 +25,7 @@ describe('c-product-list-item', () => {
         document.body.appendChild(element);
 
         const lightningButton =
-            element.shadowRoot.querySelector('lightning-button');
+            element.shadowRoot.querySelector<LightningButton>('lightning-button');
         lightningButton.click();
 
         const { pageReference } = getNavigateCalledWith();
@@ -34,8 +35,8 @@ describe('c-product-list-item', () => {
         expect(pageReference.attributes.recordId).toBe(expectedId);
     });
 
-    it('is accessible', () => {
-        const element = createElement('c-product-list-item', {
+    it('is accessible', async () => {
+        const element = createElement<ProductListItem>('c-product-list-item', {
             is: ProductListItem
         });
 
@@ -47,6 +48,7 @@ describe('c-product-list-item', () => {
         };
         document.body.appendChild(element);
 
-        return Promise.resolve().then(() => expect(element).toBeAccessible());
+        await Promise.resolve();
+        return await expect(element).toBeAccessible();
     });
 });

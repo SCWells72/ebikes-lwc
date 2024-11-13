@@ -3,8 +3,10 @@ import HeroDetails from 'c/heroDetails';
 import getRecordInfo from '@salesforce/apex/ProductRecordInfoController.getRecordInfo';
 
 // Mock realistic data for the getRecordInfo adapter
-const mockGetRecordInfoProduct = require('./data/getRecordInfoProduct.json');
-const mockGetRecordInfoProductFamily = require('./data/getRecordInfoProductFamily.json');
+// @ts-expect-error Import of JSON data file
+import mockGetRecordInfoProduct from "./data/getRecordInfoProduct.json";
+// @ts-expect-error Import of JSON data file
+import mockGetRecordInfoProductFamily from "./data/getRecordInfoProductFamily.json";
 
 // Mock realistic data for the public properties
 const mockTitle = 'Title';
@@ -22,6 +24,7 @@ jest.mock(
     () => {
         const {
             createApexTestWireAdapter
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         } = require('@salesforce/sfdx-lwc-jest');
         return {
             default: createApexTestWireAdapter(jest.fn())
@@ -29,6 +32,8 @@ jest.mock(
     },
     { virtual: true }
 );
+
+const getRecordInfoMock = getRecordInfo as unknown as ic.jest.MockTestWireAdapter;
 
 describe('c-hero-details', () => {
     afterEach(() => {
@@ -38,58 +43,56 @@ describe('c-hero-details', () => {
         }
     });
 
-    it('sets the href URL to a Product__c', () => {
-        const element = createElement('c-hero-details', {
+    it('sets the href URL to a Product__c', async () => {
+        const element = createElement<HeroDetails>('c-hero-details', {
             is: HeroDetails
         });
         element.recordName = mockRecordName;
         document.body.appendChild(element);
 
         // Emit Data from the Apex wire adapter.
-        getRecordInfo.emit(mockGetRecordInfoProduct);
+        getRecordInfoMock.emit(mockGetRecordInfoProduct);
 
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
         // ending the test and fail the test if the promise rejects.
-        return Promise.resolve().then(() => {
-            // Check the wire parameters are correct
-            expect(getRecordInfo.getLastConfig()).toEqual(WIRE_INPUT);
-            // Select elements for validation
-            const anchorEl = element.shadowRoot.querySelector('a');
-            expect(anchorEl).not.toBeNull();
-            expect(anchorEl.href).toBe(
-                `http://localhost/product/${mockGetRecordInfoProduct[0]}`
-            );
-        });
+        await Promise.resolve();
+        // Check the wire parameters are correct
+        expect(getRecordInfoMock.getLastConfig()).toEqual(WIRE_INPUT);
+        // Select elements for validation
+        const anchorEl = element.shadowRoot.querySelector('a');
+        expect(anchorEl).not.toBeNull();
+        expect(anchorEl.href).toBe(
+            `http://localhost/product/${mockGetRecordInfoProduct[0]}`
+        );
     });
 
-    it('sets the href URL to a Product_Family__c', () => {
-        const element = createElement('c-hero-details', {
+    it('sets the href URL to a Product_Family__c', async () => {
+        const element = createElement<HeroDetails>('c-hero-details', {
             is: HeroDetails
         });
         element.recordName = mockRecordName;
         document.body.appendChild(element);
 
         // Emit Data from the Apex wire adapter.
-        getRecordInfo.emit(mockGetRecordInfoProductFamily);
+        getRecordInfoMock.emit(mockGetRecordInfoProductFamily);
 
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
         // ending the test and fail the test if the promise rejects.
-        return Promise.resolve().then(() => {
-            // Check the wire parameters are correct
-            expect(getRecordInfo.getLastConfig()).toEqual(WIRE_INPUT);
-            // Select elements for validation
-            const anchorEl = element.shadowRoot.querySelector('a');
-            expect(anchorEl).not.toBeNull();
-            expect(anchorEl.href).toBe(
-                `http://localhost/detail/${mockGetRecordInfoProduct[0]}`
-            );
-        });
+        await Promise.resolve();
+        // Check the wire parameters are correct
+        expect(getRecordInfoMock.getLastConfig()).toEqual(WIRE_INPUT);
+        // Select elements for validation
+        const anchorEl = element.shadowRoot.querySelector('a');
+        expect(anchorEl).not.toBeNull();
+        expect(anchorEl.href).toBe(
+            `http://localhost/detail/${mockGetRecordInfoProduct[0]}`
+        );
     });
 
-    it('displays the title and slogan', () => {
-        const element = createElement('c-hero-details', {
+    it('displays the title and slogan', async () => {
+        const element = createElement<HeroDetails>('c-hero-details', {
             is: HeroDetails
         });
         element.title = mockTitle;
@@ -98,24 +101,23 @@ describe('c-hero-details', () => {
         document.body.appendChild(element);
 
         // Emit Data from the Apex wire adapter.
-        getRecordInfo.emit(mockGetRecordInfoProductFamily);
+        getRecordInfoMock.emit(mockGetRecordInfoProductFamily);
 
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
         // ending the test and fail the test if the promise rejects.
-        return Promise.resolve().then(() => {
-            // Check the wire parameters are correct
-            expect(getRecordInfo.getLastConfig()).toEqual(WIRE_INPUT);
-            // Select elements for validation
-            const headingEL = element.shadowRoot.querySelector('h1');
-            expect(headingEL.textContent).toBe(mockTitle);
-            const paragraphEl = element.shadowRoot.querySelector('p');
-            expect(paragraphEl.textContent).toBe(mockSlogan);
-        });
+        await Promise.resolve();
+        // Check the wire parameters are correct
+        expect(getRecordInfoMock.getLastConfig()).toEqual(WIRE_INPUT);
+        // Select elements for validation
+        const headingEL = element.shadowRoot.querySelector('h1');
+        expect(headingEL.textContent).toBe(mockTitle);
+        const paragraphEl = element.shadowRoot.querySelector('p');
+        expect(paragraphEl.textContent).toBe(mockSlogan);
     });
 
-    it('is accessible', () => {
-        const element = createElement('c-hero-details', {
+    it('is accessible', async () => {
+        const element = createElement<HeroDetails>('c-hero-details', {
             is: HeroDetails
         });
 
@@ -124,6 +126,7 @@ describe('c-hero-details', () => {
         element.recordName = mockRecordName;
         document.body.appendChild(element);
 
-        return Promise.resolve().then(() => expect(element).toBeAccessible());
+        await Promise.resolve();
+        return await expect(element).toBeAccessible();
     });
 });

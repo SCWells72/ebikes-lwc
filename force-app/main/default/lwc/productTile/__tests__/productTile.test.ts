@@ -10,16 +10,18 @@ describe('c-product-tile', () => {
     });
 
     it('dragging sets product as dataTransfer data', () => {
-        const element = createElement('c-product-tile', {
+        const element = createElement<ProductTile>('c-product-tile', {
             is: ProductTile
         });
         // Emulate a DragEvent, jsdom does not implement this class yet
-        const dragstartEvent = new CustomEvent('dragstart');
+        const dragstartEvent = new CustomEvent('dragstart') as unknown as DragEvent;
+        // @ts-expect-error Constant reassignment
+        // noinspection JSConstantReassignment
         dragstartEvent.dataTransfer = {
             setData: jest.fn()
         };
-        const product = {
-            Id: 1,
+        const product: Product__c = {
+            Id: '1',
             Picture_URL__c: 'https://salesforce.com',
             Name: 'Foo',
             MSRP__c: 1000
@@ -38,12 +40,12 @@ describe('c-product-tile', () => {
 
     it('clicking fires selected event', () => {
         const listener = jest.fn();
-        const element = createElement('c-product-tile', {
+        const element = createElement<ProductTile>('c-product-tile', {
             is: ProductTile
         });
         element.addEventListener('selected', listener);
         element.product = {
-            Id: 1,
+            Id: '1',
             Picture_URL__c: 'https://salesforce.com',
             Name: 'Foo',
             MSRP__c: 1000
@@ -56,19 +58,20 @@ describe('c-product-tile', () => {
         expect(listener).toHaveBeenCalled();
     });
 
-    it('is accessible', () => {
-        const element = createElement('c-product-tile', {
+    it('is accessible', async () => {
+        const element = createElement<ProductTile>('c-product-tile', {
             is: ProductTile
         });
 
         element.product = {
-            Id: 1,
+            Id: '1',
             Picture_URL__c: 'https://salesforce.com',
             Name: 'Foo',
             MSRP__c: 1000
         };
         document.body.appendChild(element);
 
-        return Promise.resolve().then(() => expect(element).toBeAccessible());
+        await Promise.resolve();
+        return await expect(element).toBeAccessible();
     });
 });

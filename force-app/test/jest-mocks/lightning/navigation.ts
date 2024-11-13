@@ -1,3 +1,7 @@
+// noinspection JSUnusedGlobalSymbols
+
+import { PageReference } from "lightning/uiAppsApi";
+
 /**
  * For the original lightning/navigation mock that comes by default with
  * @salesforce/sfdx-lwc-jest, see:
@@ -5,18 +9,19 @@
  */
 export const CurrentPageReference = jest.fn();
 
-let _pageReference, _replace;
+let _pageReference: PageReference, _replace: boolean;
 
 const Navigate = Symbol('Navigate');
 const GenerateUrl = Symbol('GenerateUrl');
-export const NavigationMixin = (Base) => {
+export const NavigationMixin = (Base: any) => {
     return class extends Base {
-        [Navigate](pageReference, replace) {
+        [Navigate](pageReference: PageReference, replace: boolean) {
             _pageReference = pageReference;
             _replace = replace;
         }
-        // eslint-disable-next-line no-unused-vars
-        [GenerateUrl](pageReference) {}
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        [GenerateUrl](_pageReference: PageReference) {}
     };
 };
 NavigationMixin.Navigate = Navigate;

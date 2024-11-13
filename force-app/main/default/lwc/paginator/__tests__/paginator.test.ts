@@ -1,5 +1,6 @@
 import { createElement } from 'lwc';
 import Paginator from 'c/paginator';
+import LightningButtonIcon from "lightning/buttonIcon";
 
 describe('c-paginator', () => {
     afterEach(() => {
@@ -9,7 +10,7 @@ describe('c-paginator', () => {
         }
     });
 
-    it('sends "next" event on button click', () => {
+    it('sends "next" event on button click', async () => {
         // Create initial element
         const element = createElement('c-paginator', {
             is: Paginator
@@ -23,19 +24,18 @@ describe('c-paginator', () => {
         element.addEventListener('next', handlerNext);
 
         // Click the next(>) button
-        const nextButtonEl = element.shadowRoot.querySelector('.next');
+        const nextButtonEl = element.shadowRoot.querySelector<LightningButtonIcon>('.next');
         nextButtonEl.click();
 
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
         // ending the test and fail the test if the promise rejects.
-        return Promise.resolve().then(() => {
-            // Validate if mocked events got fired
-            expect(handlerNext.mock.calls.length).toBe(1);
-        });
+        await Promise.resolve();
+        // Validate if mocked events got fired
+        expect(handlerNext.mock.calls.length).toBe(1);
     });
 
-    it('sends "previous" event on button click', () => {
+    it('sends "previous" event on button click', async () => {
         // Create initial element
         const element = createElement('c-paginator', {
             is: Paginator
@@ -49,21 +49,20 @@ describe('c-paginator', () => {
         element.addEventListener('previous', handlerPrevious);
 
         // Click the Previous(<) button
-        const prevButtonEl = element.shadowRoot.querySelector('.previous');
+        const prevButtonEl = element.shadowRoot.querySelector<LightningButtonIcon>('.previous');
         prevButtonEl.click();
 
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
         // ending the test and fail the test if the promise rejects.
-        return Promise.resolve().then(() => {
-            // Validate if mocked events got fired
-            expect(handlerPrevious.mock.calls.length).toBe(1);
-        });
+        await Promise.resolve();
+        // Validate if mocked events got fired
+        expect(handlerPrevious.mock.calls.length).toBe(1);
     });
 
     it('displays total item count, page number, and number of pages with zero items', () => {
         // Create initial element
-        const element = createElement('c-paginator', {
+        const element = createElement<Paginator>('c-paginator', {
             is: Paginator
         });
         element.pageNumber = 0;
@@ -80,11 +79,12 @@ describe('c-paginator', () => {
 
     it('displays total item count, page number, and number of pages with some items', async () => {
         // Create initial element
-        const element = createElement('c-paginator', {
+        const element = createElement<Paginator>('c-paginator', {
             is: Paginator
         });
         element.pageNumber = 1;
         element.pageSize = 9;
+        // noinspection MagicNumberJS
         element.totalItemCount = 12;
         document.body.appendChild(element);
 
@@ -103,11 +103,12 @@ describe('c-paginator', () => {
 
     it('is accessible', async () => {
         // Create initial element
-        const element = createElement('c-paginator', {
+        const element = createElement<Paginator>('c-paginator', {
             is: Paginator
         });
         element.pageNumber = 3;
         element.pageSize = 9;
+        // noinspection MagicNumberJS
         element.totalItemCount = 12;
         document.body.appendChild(element);
 

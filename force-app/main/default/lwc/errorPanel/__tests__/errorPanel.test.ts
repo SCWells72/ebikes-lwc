@@ -1,3 +1,5 @@
+// noinspection LocalVariableNamingConventionJS
+
 import { createElement } from 'lwc';
 import ErrorPanel from 'c/errorPanel';
 
@@ -26,7 +28,7 @@ describe('c-error-panel', () => {
         const MESSAGE = 'Errors are bad';
 
         // Create initial element
-        const element = createElement('c-error-panel', {
+        const element = createElement<ErrorPanel>('c-error-panel', {
             is: ErrorPanel
         });
         element.friendlyMessage = MESSAGE;
@@ -47,7 +49,7 @@ describe('c-error-panel', () => {
         expect(inputEl).toBeNull();
     });
 
-    it('displays error details when errors are passed as parameters', () => {
+    it('displays error details when errors are passed as parameters', async () => {
         const ERROR_MESSAGES_INPUT = [
             { statusText: 'First bad error' },
             { statusText: 'Second bad error' }
@@ -55,24 +57,25 @@ describe('c-error-panel', () => {
         const ERROR_MESSAGES_OUTPUT = ['First bad error', 'Second bad error'];
 
         // Create initial element
-        const element = createElement('c-error-panel', {
+        const element = createElement<ErrorPanel>('c-error-panel', {
             is: ErrorPanel
         });
         element.errors = ERROR_MESSAGES_INPUT;
         document.body.appendChild(element);
 
-        const inputEl = element.shadowRoot.querySelector('a');
+        const inputEl = element.shadowRoot.querySelector<HTMLInputElement>('a');
         inputEl.checked = true;
         inputEl.dispatchEvent(new CustomEvent('click'));
 
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
         // ending the test and fail the test if the promise rejects.
-        return Promise.resolve().then(() => {
-            const messageTexts = Array.from(
-                element.shadowRoot.querySelectorAll('p')
-            ).map((errorMessage) => (errorMessage = errorMessage.textContent));
-            expect(messageTexts).toEqual(ERROR_MESSAGES_OUTPUT);
-        });
+        await Promise.resolve();
+        // noinspection JSUnusedAssignment
+        const messageTexts = Array.from(
+            element.shadowRoot.querySelectorAll('p')
+            // @ts-expect-error Not sure if this is actually correct in the original source
+        ).map((errorMessage) => (errorMessage = errorMessage.textContent));
+        expect(messageTexts).toEqual(ERROR_MESSAGES_OUTPUT);
     });
 });

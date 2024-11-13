@@ -1,7 +1,9 @@
-var _mockIsEmpEnabled = true;
-var _mockErrorCallback;
-var _mockSubscribeError;
-var _mockSubscribeCallback;
+// noinspection JSUnusedGlobalSymbols
+
+let _mockIsEmpEnabled = true;
+let _mockErrorCallback: (arg0: any) => void;
+let _mockSubscribeError: any;
+let _mockSubscribeCallback: (arg0: any) => void;
 
 // empApi methods mocks
 const isEmpEnabled = jest.fn(() => Promise.resolve(_mockIsEmpEnabled));
@@ -12,7 +14,7 @@ const onError = jest.fn((callback) => {
     _mockErrorCallback = callback;
 });
 
-const subscribe = jest.fn((channel, replayId, callback) => {
+const subscribe = jest.fn((_channel, _replayId, callback) => {
     if (_mockSubscribeError) {
         return Promise.reject(_mockSubscribeError);
     }
@@ -33,19 +35,19 @@ const resetMock = () => {
     _mockSubscribeCallback = undefined;
 };
 
-const setMockEmpEnabled = (isEnabled) => {
+const setMockEmpEnabled = (isEnabled: boolean) => {
     _mockIsEmpEnabled = isEnabled;
 };
 
-const fireMockError = (error) => {
+const fireMockError = (error: any) => {
     _mockErrorCallback(error);
 };
 
-const setMockSubscribeError = (error) => {
+const setMockSubscribeError = (error: any) => {
     _mockSubscribeError = error;
 };
 
-const fireMockEvent = (event) => {
+const fireMockEvent = (event: any) => {
     _mockSubscribeCallback(event);
 };
 
