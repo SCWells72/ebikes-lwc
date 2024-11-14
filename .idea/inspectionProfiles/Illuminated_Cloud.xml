@@ -1203,6 +1203,7 @@
     <inspection_tool class="LwcTypeScriptAddEventType" enabled="true" level="INFO" enabled_by_default="true" />
     <inspection_tool class="LwcTypeScriptAddInferredComponentType" enabled="true" level="INFO" enabled_by_default="true" />
     <inspection_tool class="LwcTypeScriptAddInferredMessageChannelType" enabled="true" level="INFO" enabled_by_default="true" />
+    <inspection_tool class="LwcTypeScriptAddWireMockType" enabled="true" level="INFO" enabled_by_default="true" />
     <inspection_tool class="LwcTypeScriptAddWiredType" enabled="true" level="INFO" enabled_by_default="true" />
     <inspection_tool class="MISSORTED_IMPORTS" enabled="false" level="INFORMATION" enabled_by_default="false" />
     <inspection_tool class="MagicCharacter" enabled="false" level="WARNING" enabled_by_default="false" />
