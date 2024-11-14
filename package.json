@@ -60,6 +60,7 @@
         "chromedriver": "^128.0.1",
         "dotenv": "^16.4.5",
         "eslint": "^8.57.1",
+        "eslint-import-resolver-typescript": "^3.6.3",
         "eslint-plugin-import": "^2.31.0",
         "eslint-plugin-jasmine": "^4.2.2",
         "eslint-plugin-jest": "^28.8.3",
