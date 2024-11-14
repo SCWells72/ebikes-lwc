@@ -28,8 +28,6 @@ jest.mock(
     { virtual: true }
 );
 
-const getProductsMock = getProducts as unknown as jest.MockInstance<any, any> & ApexTestWireAdapter;
-
 describe('c-product-tile-list', () => {
     afterEach(() => {
         // The jsdom instance is shared across test cases in a single file so reset the DOM
@@ -44,7 +42,7 @@ describe('c-product-tile-list', () => {
                 is: ProductTileList
             });
             document.body.appendChild(element);
-            getProductsMock.emit(mockGetProducts);
+            (<ApexTestWireAdapter><unknown>getProducts).emit(mockGetProducts);
 
             // Return a promise to wait for any asynchronous DOM updates.
             await Promise.resolve();
@@ -69,7 +67,7 @@ describe('c-product-tile-list', () => {
                 is: ProductTileList
             });
             document.body.appendChild(element);
-            getProductsMock.emit(mockGetProducts);
+            (<ApexTestWireAdapter><unknown>getProducts).emit(mockGetProducts);
 
             return Promise.resolve()
                 .then(() => {
@@ -108,7 +106,7 @@ describe('c-product-tile-list', () => {
                 is: ProductTileList
             });
             document.body.appendChild(element);
-            getProductsMock.emit(mockGetProducts);
+            (<ApexTestWireAdapter><unknown>getProducts).emit(mockGetProducts);
 
             // Return a promise to wait for any asynchronous DOM updates.
             return Promise.resolve()
@@ -118,7 +116,7 @@ describe('c-product-tile-list', () => {
                     paginator.dispatchEvent(new CustomEvent('next'));
                 })
                 .then(() => {
-                    const { pageNumber } = getProductsMock.getLastConfig();
+                    const { pageNumber } = (<ApexTestWireAdapter><unknown>getProducts).getLastConfig();
                     // we've fired a single 'next' event so increment the original pageNumber
                     expect(pageNumber).toBe(mockGetProducts.pageNumber + 1);
                 });
@@ -130,7 +128,7 @@ describe('c-product-tile-list', () => {
                 is: ProductTileList
             });
             document.body.appendChild(element);
-            getProductsMock.emit(mockGetProducts);
+            (<ApexTestWireAdapter><unknown>getProducts).emit(mockGetProducts);
 
             await Promise.resolve();
             const productTiles =
@@ -143,7 +141,7 @@ describe('c-product-tile-list', () => {
                 is: ProductTileList
             });
             document.body.appendChild(element);
-            getProductsMock.emit(mockGetProducts);
+            (<ApexTestWireAdapter><unknown>getProducts).emit(mockGetProducts);
 
             await Promise.resolve();
             const productTile =
@@ -163,7 +161,7 @@ describe('c-product-tile-list', () => {
                 is: ProductTileList
             });
             document.body.appendChild(element);
-            getProductsMock.emit(mockGetProductsNoRecords);
+            (<ApexTestWireAdapter><unknown>getProducts).emit(mockGetProductsNoRecords);
 
             await Promise.resolve();
             const paginator = element.shadowRoot.querySelector('c-paginator');
@@ -177,7 +175,7 @@ describe('c-product-tile-list', () => {
                 is: ProductTileList
             });
             document.body.appendChild(element);
-            getProductsMock.emit(mockGetProductsNoRecords);
+            (<ApexTestWireAdapter><unknown>getProducts).emit(mockGetProductsNoRecords);
 
             await Promise.resolve();
             const placeholder =
@@ -196,7 +194,7 @@ describe('c-product-tile-list', () => {
                 is: ProductTileList
             });
             document.body.appendChild(element);
-            getProductsMock.error();
+            (<ApexTestWireAdapter><unknown>getProducts).error();
             return Promise.resolve()
                 .then(() => {
                     const errorPanel =
@@ -225,7 +223,7 @@ describe('c-product-tile-list', () => {
             });
             element.searchBarIsVisible = true;
             document.body.appendChild(element);
-            getProductsMock.emit(mockGetProducts);
+            (<ApexTestWireAdapter><unknown>getProducts).emit(mockGetProducts);
 
             return Promise.resolve()
                 .then(() => {
@@ -235,7 +233,7 @@ describe('c-product-tile-list', () => {
                     searchBar.dispatchEvent(new CustomEvent('change'));
                 })
                 .then(() => {
-                    const { filters } = getProductsMock.getLastConfig();
+                    const { filters } = (<ApexTestWireAdapter><unknown>getProducts).getLastConfig();
                     expect(filters).toEqual(expected);
                 });
         });
@@ -256,7 +254,7 @@ describe('c-product-tile-list', () => {
 
             // Check that wire gets called with new filters
             await Promise.resolve();
-            const { filters } = getProductsMock.getLastConfig();
+            const { filters } = (<ApexTestWireAdapter><unknown>getProducts).getLastConfig();
             expect(filters).toEqual(mockMessage.filters);
         });
     });
@@ -267,7 +265,7 @@ describe('c-product-tile-list', () => {
         });
 
         document.body.appendChild(element);
-        getProductsMock.emit(mockGetProducts);
+        (<ApexTestWireAdapter><unknown>getProducts).emit(mockGetProducts);
 
         await Promise.resolve();
         return expect(element).toBeAccessible();
@@ -279,7 +277,7 @@ describe('c-product-tile-list', () => {
         });
 
         document.body.appendChild(element);
-        getProductsMock.emit(mockGetProductsNoRecords);
+        (<ApexTestWireAdapter><unknown>getProducts).emit(mockGetProductsNoRecords);
 
         await Promise.resolve();
         return expect(element).toBeAccessible();
@@ -291,7 +289,7 @@ describe('c-product-tile-list', () => {
         });
 
         document.body.appendChild(element);
-        getProductsMock.error();
+        (<ApexTestWireAdapter><unknown>getProducts).error();
 
         await Promise.resolve();
         return expect(element).toBeAccessible();
