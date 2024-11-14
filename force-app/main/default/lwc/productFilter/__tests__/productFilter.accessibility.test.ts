@@ -7,6 +7,7 @@
 import { createElement } from 'lwc';
 import ProductFilter from 'c/productFilter';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
+import { TestWireAdapter } from '@salesforce/wire-service-jest-util';
 
 /*
  * Import a snapshot of getPicklistValues' response for functional verification. This eliminates
@@ -25,7 +26,7 @@ import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 
 import mockGetPicklistValues from './data/getPicklistValues.json';
 
-const getPicklistValuesMock = getPicklistValues as unknown as ic.jest.MockTestWireAdapter;
+const getPicklistValuesMock = getPicklistValues as unknown as jest.MockInstance<any, any> & TestWireAdapter;
 
 describe('c-product-filter-accessibility', () => {
     afterEach(() => {

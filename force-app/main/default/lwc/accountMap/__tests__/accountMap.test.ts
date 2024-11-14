@@ -3,6 +3,7 @@ import PropertyMap from 'c/accountMap';
 import { getRecord } from 'lightning/uiRecordApi';
 import LightningMap from 'lightning/map';
 import ErrorPanel from 'c/errorPanel';
+import { LdsTestWireAdapter } from '@salesforce/wire-service-jest-util';
 
 // Realistic data with an accounts address details
 import mockGetRecordWithAddress from "./data/getRecordWithAddress.json";
@@ -11,7 +12,7 @@ import mockGetRecordWithoutAddress from "./data/getRecordWithoutAddress.json";
 const mockRecordId = '0031700000pJRRSAA4';
 const mockWireErrorMessage = 'Error retrieving record';
 
-const getRecordMock = getRecord as unknown as ic.jest.MockTestWireAdapter;
+const getRecordMock = getRecord as unknown as jest.MockInstance<any, any> & LdsTestWireAdapter;
 
 describe('c-account-map', () => {
     afterEach(() => {

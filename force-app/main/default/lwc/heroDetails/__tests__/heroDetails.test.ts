@@ -1,6 +1,7 @@
 import { createElement } from 'lwc';
 import HeroDetails from 'c/heroDetails';
 import getRecordInfo from '@salesforce/apex/ProductRecordInfoController.getRecordInfo';
+import { ApexTestWireAdapter } from '@salesforce/wire-service-jest-util';
 
 // Mock realistic data for the getRecordInfo adapter
 import mockGetRecordInfoProduct from "./data/getRecordInfoProduct.json";
@@ -31,7 +32,7 @@ jest.mock(
     { virtual: true }
 );
 
-const getRecordInfoMock = getRecordInfo as unknown as ic.jest.MockTestWireAdapter;
+const getRecordInfoMock = getRecordInfo as unknown as jest.MockInstance<any, any> & ApexTestWireAdapter;
 
 describe('c-hero-details', () => {
     afterEach(() => {

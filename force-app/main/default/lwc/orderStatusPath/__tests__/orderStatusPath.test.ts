@@ -4,6 +4,7 @@ import { getObjectInfo, getPicklistValues } from 'lightning/uiObjectInfoApi';
 import { getRecord, updateRecord } from 'lightning/uiRecordApi';
 // @ts-expect-error Not sure how to get TSC to pick this up from jest.config.js
 import { empApiMock, isEmpEnabled, onError, subscribe } from 'lightning/empApi';
+import { LdsTestWireAdapter, TestWireAdapter } from '@salesforce/wire-service-jest-util';
 
 // Mock realistic data
 import mockGetObjectInfo from './data/getObjectInfo.json';
@@ -19,11 +20,11 @@ const mockEvent = {
     }
 };
 
-const getObjectInfoMock = getObjectInfo as unknown as ic.jest.MockTestWireAdapter;
-const getPicklistValuesMock = getPicklistValues as unknown as ic.jest.MockTestWireAdapter;
-const getRecordMock = getRecord as unknown as ic.jest.MockTestWireAdapter;
-const updateRecordMock = updateRecord as unknown as ic.jest.MockTestWireAdapter & jest.MockInstance<any, any>;
-const subscribeMock = subscribe as unknown as ic.jest.MockTestWireAdapter & jest.MockInstance<any, any>;
+const getObjectInfoMock = getObjectInfo as unknown as jest.MockInstance<any, any> & TestWireAdapter;
+const getPicklistValuesMock = getPicklistValues as unknown as jest.MockInstance<any, any> & TestWireAdapter;
+const getRecordMock = getRecord as unknown as jest.MockInstance<any, any> & LdsTestWireAdapter;
+const updateRecordMock = updateRecord as unknown as jest.MockInstance<any, any> & LdsTestWireAdapter;
+const subscribeMock = subscribe as unknown as jest.MockInstance<any, any> & TestWireAdapter;
 
 describe('c-order-status-path', () => {
     afterEach(() => {
@@ -47,6 +48,7 @@ describe('c-order-status-path', () => {
 
     it('displays the path with the right items and selection', async () => {
         // Create initial element
+        // noinspection DuplicatedCode
         const element = createElement('c-order-status-path', {
             is: OrderStatusPath
         });
@@ -83,6 +85,7 @@ describe('c-order-status-path', () => {
 
     it('changes status when path item is clicked', async () => {
         // Create initial element
+        // noinspection DuplicatedCode
         const element = createElement('c-order-status-path', {
             is: OrderStatusPath
         });

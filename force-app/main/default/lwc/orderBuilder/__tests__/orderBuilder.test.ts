@@ -7,6 +7,7 @@ import LightningFormattedNumber from 'lightning/formattedNumber';
 import OrderItemTile from "c/orderItemTile";
 import Placeholder from "c/placeholder";
 import ErrorPanel from "c/errorPanel";
+import { ApexTestWireAdapter } from '@salesforce/wire-service-jest-util';
 
 // Mock realistic data for the getOrderItems adapter
 import mockGetOrderItems from "./data/getOrderItems.json";
@@ -35,7 +36,7 @@ jest.mock(
     { virtual: true }
 );
 
-const getOrderItemsMock = getOrderItems as unknown as ic.jest.MockTestWireAdapter;
+const getOrderItemsMock = getOrderItems as unknown as jest.MockInstance<any, any> & ApexTestWireAdapter;
 
 describe('c-order-builder', () => {
     afterEach(() => {

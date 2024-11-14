@@ -5,6 +5,7 @@ import { publish } from 'lightning/messageService';
 import PRODUCTS_FILTERED_MESSAGE from '@salesforce/messageChannel/ProductsFiltered__c';
 import LightningSlider from 'lightning/slider';
 import LightningInput from 'lightning/input';
+import { TestWireAdapter } from '@salesforce/wire-service-jest-util';
 
 /*
  * Import a snapshot of getPicklistValues' response for functional verification. This eliminates
@@ -23,7 +24,7 @@ import LightningInput from 'lightning/input';
 
 import mockGetPicklistValues from './data/getPicklistValues.json';
 
-const getPicklistValuesMock = getPicklistValues as unknown as ic.jest.MockTestWireAdapter;
+const getPicklistValuesMock = getPicklistValues as unknown as jest.MockInstance<any, any> & TestWireAdapter;
 
 interface Filters {
     materials?: string[];

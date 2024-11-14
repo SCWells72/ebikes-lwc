@@ -5,6 +5,7 @@ import PRODUCTS_FILTERED_MESSAGE from '@salesforce/messageChannel/ProductsFilter
 import PRODUCT_SELECTED_MESSAGE from '@salesforce/messageChannel/ProductSelected__c';
 import getProducts from '@salesforce/apex/ProductController.getProducts';
 import LightningInput from 'lightning/input';
+import { ApexTestWireAdapter } from '@salesforce/wire-service-jest-util';
 
 // Realistic data with multiple records
 import mockGetProducts from './data/getProducts.json';
@@ -27,7 +28,7 @@ jest.mock(
     { virtual: true }
 );
 
-const getProductsMock = getProducts as unknown as jest.MockInstance<any, any> & ic.jest.MockTestWireAdapter;
+const getProductsMock = getProducts as unknown as jest.MockInstance<any, any> & ApexTestWireAdapter;
 
 describe('c-product-tile-list', () => {
     afterEach(() => {

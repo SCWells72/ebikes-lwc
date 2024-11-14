@@ -4,6 +4,7 @@ import { getRecord } from 'lightning/uiRecordApi';
 import getSimilarProducts from '@salesforce/apex/ProductController.getSimilarProducts';
 import ProductListItem from "c/productListItem";
 import ErrorPanel from "c/errorPanel";
+import { ApexTestWireAdapter, LdsTestWireAdapter } from '@salesforce/wire-service-jest-util';
 
 // Mock realistic data for the getRecord adapter
 import mockGetRecord from './data/getRecord.json';
@@ -45,8 +46,8 @@ jest.mock(
     { virtual: true }
 );
 
-const getRecordMock = getRecord as unknown as jest.MockInstance<any, any> & ic.jest.MockTestWireAdapter;
-const getSimilarProductsMock = getSimilarProducts as unknown as jest.MockInstance<any, any> & ic.jest.MockTestWireAdapter;
+const getRecordMock = getRecord as unknown as jest.MockInstance<any, any> & LdsTestWireAdapter;
+const getSimilarProductsMock = getSimilarProducts as unknown as jest.MockInstance<any, any> & ApexTestWireAdapter;
 
 describe('c-similar-products', () => {
     afterEach(() => {
