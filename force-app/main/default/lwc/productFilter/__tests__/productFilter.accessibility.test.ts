@@ -26,8 +26,6 @@ import { TestWireAdapter } from '@salesforce/wire-service-jest-util';
 
 import mockGetPicklistValues from './data/getPicklistValues.json';
 
-const getPicklistValuesMock = getPicklistValues as unknown as jest.MockInstance<any, any> & TestWireAdapter;
-
 describe('c-product-filter-accessibility', () => {
     afterEach(() => {
         // The jsdom instance is shared across test cases in a single file so reset the DOM
@@ -43,7 +41,7 @@ describe('c-product-filter-accessibility', () => {
         });
         document.body.appendChild(element);
 
-        getPicklistValuesMock.emit(mockGetPicklistValues);
+        (<TestWireAdapter><unknown>getPicklistValues).emit(mockGetPicklistValues);
 
         await Promise.resolve();
         return expect(element).toBeAccessible();
@@ -55,7 +53,7 @@ describe('c-product-filter-accessibility', () => {
         });
         document.body.appendChild(element);
 
-        getPicklistValuesMock.error();
+        (<TestWireAdapter><unknown>getPicklistValues).error();
 
         await Promise.resolve();
         return expect(element).toBeAccessible();

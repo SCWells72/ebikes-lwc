@@ -46,9 +46,6 @@ jest.mock(
     { virtual: true }
 );
 
-const getRecordMock = getRecord as unknown as jest.MockInstance<any, any> & LdsTestWireAdapter;
-const getSimilarProductsMock = getSimilarProducts as unknown as jest.MockInstance<any, any> & ApexTestWireAdapter;
-
 describe('c-similar-products', () => {
     afterEach(() => {
         // The jsdom instance is shared across test cases in a single file so reset the DOM
@@ -67,17 +64,17 @@ describe('c-similar-products', () => {
         document.body.appendChild(element);
 
         // Emit data from getRecord
-        getRecordMock.emit(mockGetRecord);
+        (<LdsTestWireAdapter><unknown>getRecord).emit(mockGetRecord);
 
         // Emit Data from the Apex wire
-        getSimilarProductsMock.emit(mockSimilarProducts);
+        (<ApexTestWireAdapter><unknown>getSimilarProducts).emit(mockSimilarProducts);
 
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
         // ending the test and fail the test if the promise rejects.
         await Promise.resolve();
         // Check the wire parameters are correct
-        expect(getRecordMock.getLastConfig()).toEqual(WIRE_INPUT);
+        expect((<LdsTestWireAdapter><unknown>getRecord).getLastConfig()).toEqual(WIRE_INPUT);
         // Select elements for validation
         const productListItemEl = element.shadowRoot.querySelectorAll<ProductListItem>(
             'c-product-list-item'
@@ -98,17 +95,17 @@ describe('c-similar-products', () => {
         document.body.appendChild(element);
 
         // Emit data from getRecord
-        getRecordMock.emit(mockGetRecord);
+        (<LdsTestWireAdapter><unknown>getRecord).emit(mockGetRecord);
 
         // Emit an empty array from the Apex wire
-        getSimilarProductsMock.emit(mockSimilarProductsWithoutData);
+        (<ApexTestWireAdapter><unknown>getSimilarProducts).emit(mockSimilarProductsWithoutData);
 
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
         // ending the test and fail the test if the promise rejects.
         await Promise.resolve();
         // Check the wire parameters are correct
-        expect(getRecordMock.getLastConfig()).toEqual(WIRE_INPUT);
+        expect((<LdsTestWireAdapter><unknown>getRecord).getLastConfig()).toEqual(WIRE_INPUT);
         // Select elements for validation
         const placeholderEl = element.shadowRoot.querySelector('c-placeholder');
         expect(placeholderEl).not.toBeNull();
@@ -123,10 +120,10 @@ describe('c-similar-products', () => {
         document.body.appendChild(element);
 
         // Emit data from getRecord
-        getRecordMock.emit(mockGetRecord);
+        (<LdsTestWireAdapter><unknown>getRecord).emit(mockGetRecord);
 
         // Emit an error from the Apex wire
-        getSimilarProductsMock.error(mockWireErrorMessage);
+        (<ApexTestWireAdapter><unknown>getSimilarProducts).error(mockWireErrorMessage);
 
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
@@ -134,7 +131,7 @@ describe('c-similar-products', () => {
 
         await Promise.resolve();
         // Check the wire parameters are correct
-        expect(getRecordMock.getLastConfig()).toEqual(WIRE_INPUT);
+        expect((<LdsTestWireAdapter><unknown>getRecord).getLastConfig()).toEqual(WIRE_INPUT);
         // Select elements for validation
         const errorPanelEl = element.shadowRoot.querySelector<ErrorPanel>('c-error-panel');
         expect(errorPanelEl).not.toBeNull();
@@ -155,10 +152,10 @@ describe('c-similar-products', () => {
         document.body.appendChild(element);
 
         // Emit data from getRecord
-        getRecordMock.emit(mockGetRecord);
+        (<LdsTestWireAdapter><unknown>getRecord).emit(mockGetRecord);
 
         // Emit Data from the Apex wire
-        getSimilarProductsMock.emit(mockSimilarProducts);
+        (<ApexTestWireAdapter><unknown>getSimilarProducts).emit(mockSimilarProducts);
 
         await Promise.resolve();
         return expect(element).toBeAccessible();
@@ -175,10 +172,10 @@ describe('c-similar-products', () => {
         document.body.appendChild(element);
 
         // Emit data from getRecord
-        getRecordMock.emit(mockGetRecord);
+        (<LdsTestWireAdapter><unknown>getRecord).emit(mockGetRecord);
 
         // Emit an empty array from the Apex wire
-        getSimilarProductsMock.emit(mockSimilarProductsWithoutData);
+        (<ApexTestWireAdapter><unknown>getSimilarProducts).emit(mockSimilarProductsWithoutData);
 
         await Promise.resolve();
         return expect(element).toBeAccessible();
@@ -194,7 +191,7 @@ describe('c-similar-products', () => {
         document.body.appendChild(element);
 
         // Emit an error from the Apex wire
-        getSimilarProductsMock.error(mockWireErrorMessage);
+        (<ApexTestWireAdapter><unknown>getSimilarProducts).error(mockWireErrorMessage);
 
         await Promise.resolve();
         return expect(element).toBeAccessible();

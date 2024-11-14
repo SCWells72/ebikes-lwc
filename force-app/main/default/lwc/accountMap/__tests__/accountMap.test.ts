@@ -12,8 +12,6 @@ import mockGetRecordWithoutAddress from "./data/getRecordWithoutAddress.json";
 const mockRecordId = '0031700000pJRRSAA4';
 const mockWireErrorMessage = 'Error retrieving record';
 
-const getRecordMock = getRecord as unknown as jest.MockInstance<any, any> & LdsTestWireAdapter;
-
 describe('c-account-map', () => {
     afterEach(() => {
         // The jsdom instance is shared across test cases in a single file so reset the DOM
@@ -32,7 +30,7 @@ describe('c-account-map', () => {
         document.body.appendChild(element);
 
         // Emit data from the get record adapter that includes billing street data
-        getRecordMock.emit(mockGetRecordWithAddress);
+        (<LdsTestWireAdapter><unknown>getRecord).emit(mockGetRecordWithAddress);
 
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
@@ -66,7 +64,7 @@ describe('c-account-map', () => {
         document.body.appendChild(element);
 
         // Emit data from the get record adapter that does not include billing street data
-        getRecordMock.emit(mockGetRecordWithoutAddress);
+        (<LdsTestWireAdapter><unknown>getRecord).emit(mockGetRecordWithoutAddress);
 
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
@@ -90,7 +88,7 @@ describe('c-account-map', () => {
         document.body.appendChild(element);
 
         // Emit an error from the getRecord adapter.
-        getRecordMock.error(mockWireErrorMessage);
+        (<LdsTestWireAdapter><unknown>getRecord).error(mockWireErrorMessage);
 
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
@@ -117,7 +115,7 @@ describe('c-account-map', () => {
         document.body.appendChild(element);
 
         // Emit data from the get record adapter that includes billing street data
-        getRecordMock.emit(mockGetRecordWithAddress);
+        (<LdsTestWireAdapter><unknown>getRecord).emit(mockGetRecordWithAddress);
 
         await Promise.resolve();
         return expect(element).toBeAccessible();
@@ -132,7 +130,7 @@ describe('c-account-map', () => {
         document.body.appendChild(element);
 
         // Emit an error from the getRecord adapter.
-        getRecordMock.error(mockWireErrorMessage);
+        (<LdsTestWireAdapter><unknown>getRecord).error(mockWireErrorMessage);
 
         await Promise.resolve();
         return expect(element).toBeAccessible();

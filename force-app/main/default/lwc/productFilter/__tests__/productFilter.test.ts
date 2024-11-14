@@ -24,8 +24,6 @@ import { TestWireAdapter } from '@salesforce/wire-service-jest-util';
 
 import mockGetPicklistValues from './data/getPicklistValues.json';
 
-const getPicklistValuesMock = getPicklistValues as unknown as jest.MockInstance<any, any> & TestWireAdapter;
-
 interface Filters {
     materials?: string[];
     categories?: string[];
@@ -116,7 +114,7 @@ describe('c-product-filter', () => {
             });
             document.body.appendChild(element);
 
-            getPicklistValuesMock.emit(mockGetPicklistValues);
+            (<TestWireAdapter><unknown>getPicklistValues).emit(mockGetPicklistValues);
 
             // Prepare expected filter values with default filters
             const expectedFilters: ExpectedFilters = {
@@ -165,7 +163,7 @@ describe('c-product-filter', () => {
             });
             document.body.appendChild(element);
 
-            getPicklistValuesMock.error();
+            (<TestWireAdapter><unknown>getPicklistValues).error();
 
             await Promise.resolve();
             const messages = element.shadowRoot.querySelectorAll('c-error-panel');
@@ -181,7 +179,7 @@ describe('c-product-filter', () => {
                 });
                 document.body.appendChild(element);
 
-                getPicklistValuesMock.error();
+                (<TestWireAdapter><unknown>getPicklistValues).error();
 
                 await Promise.resolve();
                 const input = element.shadowRoot.querySelector(

@@ -36,8 +36,6 @@ jest.mock(
     { virtual: true }
 );
 
-const getOrderItemsMock = getOrderItems as unknown as jest.MockInstance<any, any> & ApexTestWireAdapter;
-
 describe('c-order-builder', () => {
     afterEach(() => {
         // The jsdom instance is shared across test cases in a single file so reset the DOM
@@ -64,13 +62,13 @@ describe('c-order-builder', () => {
         document.body.appendChild(element);
 
         // Emit Data from the Apex wire adapter.
-        getOrderItemsMock.emit(mockGetOrderItems);
+        (<ApexTestWireAdapter><unknown>getOrderItems).emit(mockGetOrderItems);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
 
         // Check the wire parameters are correct
-        expect(getOrderItemsMock.getLastConfig()).toEqual(WIRE_INPUT);
+        expect((<ApexTestWireAdapter><unknown>getOrderItems).getLastConfig()).toEqual(WIRE_INPUT);
         // Select elements for validation
         const orderItemTileEl =
             element.shadowRoot.querySelectorAll('c-order-item-tile');
@@ -106,13 +104,13 @@ describe('c-order-builder', () => {
         document.body.appendChild(element);
 
         // Emit Data from the Apex wire adapter.s
-        getOrderItemsMock.emit(mockGetOrderItems);
+        (<ApexTestWireAdapter><unknown>getOrderItems).emit(mockGetOrderItems);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
 
         // Check the wire parameters are correct
-        expect(getOrderItemsMock.getLastConfig()).toEqual(WIRE_INPUT);
+        expect((<ApexTestWireAdapter><unknown>getOrderItems).getLastConfig()).toEqual(WIRE_INPUT);
         // Select elements for validation
         let orderItemTileEl =
             element.shadowRoot.querySelectorAll<OrderItemTile>('c-order-item-tile');
@@ -156,13 +154,13 @@ describe('c-order-builder', () => {
         document.body.appendChild(element);
 
         // Emit Data from the Apex wire adapter.
-        getOrderItemsMock.emit(mockGetOrderItems);
+        (<ApexTestWireAdapter><unknown>getOrderItems).emit(mockGetOrderItems);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
 
         // Check the wire parameters are correct
-        expect(getOrderItemsMock.getLastConfig()).toEqual(WIRE_INPUT);
+        expect((<ApexTestWireAdapter><unknown>getOrderItems).getLastConfig()).toEqual(WIRE_INPUT);
         // Select elements for validation
         let orderItemTileEl =
             element.shadowRoot.querySelectorAll('c-order-item-tile');
@@ -203,7 +201,7 @@ describe('c-order-builder', () => {
         document.body.appendChild(element);
 
         // Emit Data from the Apex wire adapter.
-        getOrderItemsMock.emit(mockGetOrderItemsEmpty);
+        (<ApexTestWireAdapter><unknown>getOrderItems).emit(mockGetOrderItemsEmpty);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
@@ -224,7 +222,7 @@ describe('c-order-builder', () => {
         document.body.appendChild(element);
 
         // Emit Data from the Apex wire adapter.
-        getOrderItemsMock.error(mockError);
+        (<ApexTestWireAdapter><unknown>getOrderItems).error(mockError);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
@@ -243,7 +241,7 @@ describe('c-order-builder', () => {
         document.body.appendChild(element);
 
         // Emit Data from the Apex wire adapter.
-        getOrderItemsMock.emit(mockGetOrderItems);
+        (<ApexTestWireAdapter><unknown>getOrderItems).emit(mockGetOrderItems);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
@@ -259,7 +257,7 @@ describe('c-order-builder', () => {
         document.body.appendChild(element);
 
         // Emit Data from the Apex wire adapter.
-        getOrderItemsMock.emit(mockGetOrderItemsEmpty);
+        (<ApexTestWireAdapter><unknown>getOrderItems).emit(mockGetOrderItemsEmpty);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
@@ -277,7 +275,7 @@ describe('c-order-builder', () => {
         document.body.appendChild(element);
 
         // Emit Error from the Apex wire adapter.
-        getOrderItemsMock.error(mockError);
+        (<ApexTestWireAdapter><unknown>getOrderItems).error(mockError);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();

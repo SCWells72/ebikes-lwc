@@ -32,8 +32,6 @@ jest.mock(
     { virtual: true }
 );
 
-const getRecordInfoMock = getRecordInfo as unknown as jest.MockInstance<any, any> & ApexTestWireAdapter;
-
 describe('c-hero-details', () => {
     afterEach(() => {
         // The jsdom instance is shared across test cases in a single file so reset the DOM
@@ -50,14 +48,14 @@ describe('c-hero-details', () => {
         document.body.appendChild(element);
 
         // Emit Data from the Apex wire adapter.
-        getRecordInfoMock.emit(mockGetRecordInfoProduct);
+        (<ApexTestWireAdapter><unknown>getRecordInfo).emit(mockGetRecordInfoProduct);
 
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
         // ending the test and fail the test if the promise rejects.
         await Promise.resolve();
         // Check the wire parameters are correct
-        expect(getRecordInfoMock.getLastConfig()).toEqual(WIRE_INPUT);
+        expect((<ApexTestWireAdapter><unknown>getRecordInfo).getLastConfig()).toEqual(WIRE_INPUT);
         // Select elements for validation
         const anchorEl = element.shadowRoot.querySelector('a');
         expect(anchorEl).not.toBeNull();
@@ -74,14 +72,14 @@ describe('c-hero-details', () => {
         document.body.appendChild(element);
 
         // Emit Data from the Apex wire adapter.
-        getRecordInfoMock.emit(mockGetRecordInfoProductFamily);
+        (<ApexTestWireAdapter><unknown>getRecordInfo).emit(mockGetRecordInfoProductFamily);
 
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
         // ending the test and fail the test if the promise rejects.
         await Promise.resolve();
         // Check the wire parameters are correct
-        expect(getRecordInfoMock.getLastConfig()).toEqual(WIRE_INPUT);
+        expect((<ApexTestWireAdapter><unknown>getRecordInfo).getLastConfig()).toEqual(WIRE_INPUT);
         // Select elements for validation
         const anchorEl = element.shadowRoot.querySelector('a');
         expect(anchorEl).not.toBeNull();
@@ -100,14 +98,14 @@ describe('c-hero-details', () => {
         document.body.appendChild(element);
 
         // Emit Data from the Apex wire adapter.
-        getRecordInfoMock.emit(mockGetRecordInfoProductFamily);
+        (<ApexTestWireAdapter><unknown>getRecordInfo).emit(mockGetRecordInfoProductFamily);
 
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
         // ending the test and fail the test if the promise rejects.
         await Promise.resolve();
         // Check the wire parameters are correct
-        expect(getRecordInfoMock.getLastConfig()).toEqual(WIRE_INPUT);
+        expect((<ApexTestWireAdapter><unknown>getRecordInfo).getLastConfig()).toEqual(WIRE_INPUT);
         // Select elements for validation
         const headingEL = element.shadowRoot.querySelector('h1');
         expect(headingEL.textContent).toBe(mockTitle);

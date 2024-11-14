@@ -20,12 +20,6 @@ const mockEvent = {
     }
 };
 
-const getObjectInfoMock = getObjectInfo as unknown as jest.MockInstance<any, any> & TestWireAdapter;
-const getPicklistValuesMock = getPicklistValues as unknown as jest.MockInstance<any, any> & TestWireAdapter;
-const getRecordMock = getRecord as unknown as jest.MockInstance<any, any> & LdsTestWireAdapter;
-const updateRecordMock = updateRecord as unknown as jest.MockInstance<any, any> & LdsTestWireAdapter;
-const subscribeMock = subscribe as unknown as jest.MockInstance<any, any> & TestWireAdapter;
-
 describe('c-order-status-path', () => {
     afterEach(() => {
         // The jsdom instance is shared across test cases in a single file so reset the DOM
@@ -55,9 +49,9 @@ describe('c-order-status-path', () => {
         document.body.appendChild(element);
 
         // Emit data from @wire
-        getObjectInfoMock.emit(mockGetObjectInfo);
-        getPicklistValuesMock.emit(mockGetPicklistValues);
-        getRecordMock.emit(mockGetRecord);
+        (<TestWireAdapter><unknown>getObjectInfo).emit(mockGetObjectInfo);
+        (<TestWireAdapter><unknown>getPicklistValues).emit(mockGetPicklistValues);
+        (<LdsTestWireAdapter><unknown>getRecord).emit(mockGetRecord);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
@@ -92,9 +86,9 @@ describe('c-order-status-path', () => {
         document.body.appendChild(element);
 
         // Emit data from @wire
-        getObjectInfoMock.emit(mockGetObjectInfo);
-        getPicklistValuesMock.emit(mockGetPicklistValues);
-        getRecordMock.emit(mockGetRecord);
+        (<TestWireAdapter><unknown>getObjectInfo).emit(mockGetObjectInfo);
+        (<TestWireAdapter><unknown>getPicklistValues).emit(mockGetPicklistValues);
+        (<LdsTestWireAdapter><unknown>getRecord).emit(mockGetRecord);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
@@ -107,8 +101,8 @@ describe('c-order-status-path', () => {
         await flushPromises();
 
         // Validate updateRecord call
-        expect(updateRecordMock).toHaveBeenCalled();
-        expect(updateRecordMock.mock.calls[0][0].fields.Status__c).toEqual(
+        expect(updateRecord).toHaveBeenCalled();
+        expect((<jest.MockInstance<any, any>><unknown>updateRecord).mock.calls[0][0].fields.Status__c).toEqual(
             mockGetPicklistValues.values[3].value
         );
     });
@@ -121,7 +115,7 @@ describe('c-order-status-path', () => {
         document.body.appendChild(element);
 
         // Emit error from @wire
-        getPicklistValuesMock.error();
+        (<TestWireAdapter><unknown>getPicklistValues).error();
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
@@ -142,7 +136,7 @@ describe('c-order-status-path', () => {
         document.body.appendChild(element);
 
         // Emit error from @wire
-        getRecordMock.error();
+        (<LdsTestWireAdapter><unknown>getRecord).error();
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
@@ -164,19 +158,19 @@ describe('c-order-status-path', () => {
             document.body.appendChild(element);
 
             // Emit data from @wire
-            getObjectInfoMock.emit(mockGetObjectInfo);
-            getPicklistValuesMock.emit(mockGetPicklistValues);
-            getRecordMock.emit(mockGetRecord);
+            (<TestWireAdapter><unknown>getObjectInfo).emit(mockGetObjectInfo);
+            (<TestWireAdapter><unknown>getPicklistValues).emit(mockGetPicklistValues);
+            (<LdsTestWireAdapter><unknown>getRecord).emit(mockGetRecord);
 
             // Wait for any asynchronous DOM updates
             await flushPromises();
 
             // Validate EMP subscribe call
-            expect(subscribeMock).toHaveBeenCalled();
-            expect(subscribeMock.mock.calls[0][0]).toEqual(
+            expect(subscribe).toHaveBeenCalled();
+            expect((<jest.MockInstance<any, any>><unknown>subscribe).mock.calls[0][0]).toEqual(
                 '/event/Manufacturing_Event__e'
             );
-            expect(subscribeMock.mock.calls[0][1]).toEqual(-1);
+            expect((<jest.MockInstance<any, any>><unknown>subscribe).mock.calls[0][1]).toEqual(-1);
 
             // Wait for any asynchronous DOM updates
             await flushPromises();
@@ -188,8 +182,8 @@ describe('c-order-status-path', () => {
             await flushPromises();
 
             // Validate updateRecord call
-            expect(updateRecordMock).toHaveBeenCalled();
-            expect(updateRecordMock.mock.calls[0][0].fields.Status__c).toEqual(
+            expect(updateRecord).toHaveBeenCalled();
+            expect((<jest.MockInstance<any, any>><unknown>updateRecord).mock.calls[0][0].fields.Status__c).toEqual(
                 mockGetPicklistValues.values[3].value
             );
         });
