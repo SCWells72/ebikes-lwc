@@ -4,10 +4,10 @@
     <option name="connections">
       <list>
         <IlluminatedCloudConnection>
-          <option name="connectionName" value="ebikes-lwc-scw" />
+          <option name="connectionName" value="ebikes-lwc-ts" />
           <option name="connectionType" value="SFDX" />
-          <option name="defaultModuleName" value="ebikes-lwc-scw" />
-          <option name="offlineSymbolTablePath" value="$PROJECT_DIR$/IlluminatedCloud/ebikes_lwc_scw/OfflineSymbolTable.zip" />
+          <option name="defaultModuleName" value="ebikes-lwc-ts" />
+          <option name="offlineSymbolTablePath" value="$PROJECT_DIR$/IlluminatedCloud/ebikes_lwc_ts/OfflineSymbolTable.zip" />
         </IlluminatedCloudConnection>
       </list>
     </option>
