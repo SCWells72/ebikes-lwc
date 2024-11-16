@@ -5,7 +5,7 @@
     <option name="apexLogLevel" value="DEBUG" />
     <option name="calloutsLogLevel" value="INFO" />
     <option name="changedOnly" value="false" />
-    <option name="connectionName" value="ebikes-lwc-scw" />
+    <option name="connectionName" value="ebikes-lwc-ts" />
     <option name="connectionType" value="SFDX" />
     <option name="contextConfiguration" value="false" />
     <option name="databaseLogLevel" value="INFO" />
@@ -35,7 +35,7 @@
     <option name="apexLogLevel" value="DEBUG" />
     <option name="calloutsLogLevel" value="INFO" />
     <option name="changedOnly" value="false" />
-    <option name="connectionName" value="ebikes-lwc-scw" />
+    <option name="connectionName" value="ebikes-lwc-ts" />
     <option name="connectionType" value="SFDX" />
     <option name="contextConfiguration" value="false" />
     <option name="databaseLogLevel" value="INFO" />

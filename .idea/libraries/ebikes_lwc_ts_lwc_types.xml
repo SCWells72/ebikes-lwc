@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="ebikes-lwc-scw/lwc_types">
+  <library name="ebikes-lwc-ts/lwc_types">
     <CLASSES>
       <root url="file://$PROJECT_DIR$/.illuminatedCloud/lwc/types" />
     </CLASSES>

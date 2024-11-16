@@ -3,7 +3,7 @@
   <component name="FacetManager">
     <facet type="IlluminatedCloud" name="Illuminated Cloud">
       <configuration>
-        <option name="connectionName" value="ebikes-lwc-scw" />
+        <option name="connectionName" value="ebikes-lwc-ts" />
         <option name="connectionType" value="SFDX" />
       </configuration>
     </facet>
@@ -17,9 +17,9 @@
       <excludeFolder url="file://$MODULE_DIR$/coverage" />
       <excludeFolder url="file://$MODULE_DIR$/guest-profile-metadata" />
     </content>
-    <orderEntry type="jdk" jdkName="IlluminatedCloud (ebikes-lwc-scw/ebikes-lwc-scw)" jdkType="IlluminatedCloud" />
+    <orderEntry type="jdk" jdkName="IlluminatedCloud (ebikes-lwc-ts/ebikes-lwc-ts)" jdkType="IlluminatedCloud" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="ebikes-lwc-scw/lwc_types" level="project" />
+    <orderEntry type="library" name="ebikes-lwc-ts/lwc_types" level="project" />
     <orderEntry type="library" name="@types/jest" level="application" />
     <orderEntry type="library" name="@types/node" level="application" />
   </component>
