@@ -71,7 +71,7 @@ describe('c-account-map', () => {
         // ending the test and fail the test if the promise rejects.
         await Promise.resolve();
         // Select elements for validation
-        const mapEl = element.shadowRoot.querySelector('lightning-map');
+        const mapEl = element.shadowRoot.querySelector<LightningMap>('lightning-map');
         expect(mapEl).toBeNull();
         const errorPanelEl = element.shadowRoot.querySelector<ErrorPanel>('c-error-panel');
         expect(errorPanelEl).not.toBeNull();

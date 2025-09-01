@@ -10,18 +10,18 @@ describe('c-placeholder', () => {
     });
 
     it('sets img url to be bike_assets resource', () => {
-        const element = createElement('c-placeholder', {
+        const element = createElement<Placeholder>('c-placeholder', {
             is: Placeholder
         });
         document.body.appendChild(element);
-        const img = element.shadowRoot.querySelector('img');
+        const img = element.shadowRoot.querySelector<HTMLImageElement>('img');
         // By default @salesforce/sfdx-lwc-jest resolves the
         // @salesforce/resourceUrl/bike_assets import to "bike_assets"
         expect(img.src).toMatch(/\/bike_assets\//);
     });
 
     it('is accessible', async () => {
-        const element = createElement('c-placeholder', {
+        const element = createElement<Placeholder>('c-placeholder', {
             is: Placeholder
         });
 

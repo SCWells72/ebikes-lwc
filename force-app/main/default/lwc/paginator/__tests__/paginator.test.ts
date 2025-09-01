@@ -12,7 +12,7 @@ describe('c-paginator', () => {
 
     it('sends "next" event on button click', async () => {
         // Create initial element
-        const element = createElement('c-paginator', {
+        const element = createElement<Paginator>('c-paginator', {
             is: Paginator
         });
         document.body.appendChild(element);
@@ -37,7 +37,7 @@ describe('c-paginator', () => {
 
     it('sends "previous" event on button click', async () => {
         // Create initial element
-        const element = createElement('c-paginator', {
+        const element = createElement<Paginator>('c-paginator', {
             is: Paginator
         });
         document.body.appendChild(element);
@@ -71,7 +71,7 @@ describe('c-paginator', () => {
         document.body.appendChild(element);
 
         // Query div for validating the display message on component init
-        const navInfoEl = element.shadowRoot.querySelector('.nav-info');
+        const navInfoEl = element.shadowRoot.querySelector<HTMLDivElement>('.nav-info');
         //Check for the 0 items message
         expect(navInfoEl).not.toBeNull();
         expect(navInfoEl.textContent).toBe('0 items • page 0 of 0');
@@ -89,7 +89,7 @@ describe('c-paginator', () => {
         document.body.appendChild(element);
 
         // Query div for validating the display message on component init
-        const navInfoEl = element.shadowRoot.querySelector('.nav-info');
+        const navInfoEl = element.shadowRoot.querySelector<HTMLDivElement>('.nav-info');
 
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before

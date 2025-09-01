@@ -57,7 +57,7 @@ describe('c-hero-details', () => {
         // Check the wire parameters are correct
         expect((<ApexTestWireAdapter><unknown>getRecordInfo).getLastConfig()).toEqual(WIRE_INPUT);
         // Select elements for validation
-        const anchorEl = element.shadowRoot.querySelector('a');
+        const anchorEl = element.shadowRoot.querySelector<HTMLAnchorElement>('a');
         expect(anchorEl).not.toBeNull();
         expect(anchorEl.href).toBe(
             `http://localhost/product/${mockGetRecordInfoProduct[0]}`
@@ -81,7 +81,7 @@ describe('c-hero-details', () => {
         // Check the wire parameters are correct
         expect((<ApexTestWireAdapter><unknown>getRecordInfo).getLastConfig()).toEqual(WIRE_INPUT);
         // Select elements for validation
-        const anchorEl = element.shadowRoot.querySelector('a');
+        const anchorEl = element.shadowRoot.querySelector<HTMLAnchorElement>('a');
         expect(anchorEl).not.toBeNull();
         expect(anchorEl.href).toBe(
             `http://localhost/detail/${mockGetRecordInfoProduct[0]}`
@@ -107,9 +107,9 @@ describe('c-hero-details', () => {
         // Check the wire parameters are correct
         expect((<ApexTestWireAdapter><unknown>getRecordInfo).getLastConfig()).toEqual(WIRE_INPUT);
         // Select elements for validation
-        const headingEL = element.shadowRoot.querySelector('h1');
+        const headingEL = element.shadowRoot.querySelector<HTMLHeadingElement>('h1');
         expect(headingEL.textContent).toBe(mockTitle);
-        const paragraphEl = element.shadowRoot.querySelector('p');
+        const paragraphEl = element.shadowRoot.querySelector<HTMLParagraphElement>('p');
         expect(paragraphEl.textContent).toBe(mockSlogan);
     });
 

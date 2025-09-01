@@ -29,7 +29,7 @@ describe('c-product-tile', () => {
         element.product = product;
         document.body.appendChild(element);
 
-        const div = element.shadowRoot.querySelector('div');
+        const div = element.shadowRoot.querySelector<HTMLDivElement>('div');
         div.dispatchEvent(dragstartEvent);
 
         expect(dragstartEvent.dataTransfer.setData).toHaveBeenCalledWith(
@@ -52,7 +52,7 @@ describe('c-product-tile', () => {
         };
         document.body.appendChild(element);
 
-        const anchor = element.shadowRoot.querySelector('a');
+        const anchor = element.shadowRoot.querySelector<HTMLAnchorElement>('a');
         anchor.click();
 
         expect(listener).toHaveBeenCalled();

@@ -53,7 +53,7 @@ export default class Hero extends LightningElement {
 
     renderedCallback() {
         // Update the overlay with the opacity configured by the admin in builder
-        const overlay = this.template.querySelector('div');
+        const overlay = this.template.querySelector<HTMLDivElement>('div');
         if (overlay) {
             overlay.style.opacity = String(this.opacity / 10);
         }

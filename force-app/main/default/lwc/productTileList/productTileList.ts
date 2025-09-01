@@ -66,7 +66,7 @@ export default class ProductTileList extends LightningElement {
 
     handleProductSelected(event: ProductSelectedEvent) {
         // Published ProductSelected message
-        publish(this.messageContext, PRODUCT_SELECTED_MESSAGE, {
+        publish(this.messageContext, PRODUCT_SELECTED_MESSAGE, <ProductSelected__c><unknown>{
             productId: event.detail
         });
     }

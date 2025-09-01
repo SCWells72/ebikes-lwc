@@ -36,7 +36,7 @@ describe('c-product-filter-accessibility', () => {
         jest.clearAllMocks();
     });
     it('is accessible when picklist values returned', async () => {
-        const element = createElement('c-product-filter', {
+        const element = createElement<ProductFilter>('c-product-filter', {
             is: ProductFilter
         });
         document.body.appendChild(element);
@@ -48,7 +48,7 @@ describe('c-product-filter-accessibility', () => {
     });
 
     it('is accessible when error returned', async () => {
-        const element = createElement('c-product-filter', {
+        const element = createElement<ProductFilter>('c-product-filter', {
             is: ProductFilter
         });
         document.body.appendChild(element);

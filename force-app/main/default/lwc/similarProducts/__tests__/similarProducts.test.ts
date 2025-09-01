@@ -5,6 +5,7 @@ import getSimilarProducts from '@salesforce/apex/ProductController.getSimilarPro
 import ProductListItem from "c/productListItem";
 import ErrorPanel from "c/errorPanel";
 import { ApexTestWireAdapter, LdsTestWireAdapter } from '@salesforce/wire-service-jest-util';
+import Placeholder from 'c/placeholder';
 
 // Mock realistic data for the getRecord adapter
 import mockGetRecord from './data/getRecord.json';
@@ -107,7 +108,7 @@ describe('c-similar-products', () => {
         // Check the wire parameters are correct
         expect((<LdsTestWireAdapter><unknown>getRecord).getLastConfig()).toEqual(WIRE_INPUT);
         // Select elements for validation
-        const placeholderEl = element.shadowRoot.querySelector('c-placeholder');
+        const placeholderEl = element.shadowRoot.querySelector<Placeholder>('c-placeholder');
         expect(placeholderEl).not.toBeNull();
     });
 

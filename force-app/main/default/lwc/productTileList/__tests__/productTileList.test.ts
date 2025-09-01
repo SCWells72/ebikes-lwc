@@ -6,6 +6,10 @@ import PRODUCT_SELECTED_MESSAGE from '@salesforce/messageChannel/ProductSelected
 import getProducts from '@salesforce/apex/ProductController.getProducts';
 import LightningInput from 'lightning/input';
 import { ApexTestWireAdapter } from '@salesforce/wire-service-jest-util';
+import ErrorPanel from 'c/errorPanel';
+import Placeholder from 'c/placeholder';
+import Paginator from 'c/paginator';
+import ProductTile from 'c/productTile';
 
 // Realistic data with multiple records
 import mockGetProducts from './data/getProducts.json';
@@ -38,7 +42,7 @@ describe('c-product-tile-list', () => {
 
     describe('getProduct @wire emits records', () => {
         it('renders paginator with correct item counts', async () => {
-            const element = createElement('c-product-tile-list', {
+            const element = createElement<ProductTileList>('c-product-tile-list', {
                 is: ProductTileList
             });
             document.body.appendChild(element);
@@ -46,7 +50,7 @@ describe('c-product-tile-list', () => {
 
             // Return a promise to wait for any asynchronous DOM updates.
             await Promise.resolve();
-            const paginator = element.shadowRoot.querySelector('c-paginator');
+            const paginator = element.shadowRoot.querySelector<Paginator>('c-paginator');
             expect(paginator).not.toBeNull();
             // paginator text will look something like: "12 items • page 1 of 2"
             const totalPages = Math.ceil(
@@ -63,7 +67,7 @@ describe('c-product-tile-list', () => {
             const totalPages = Math.ceil(
                 mockGetProducts.totalItemCount / mockGetProducts.pageSize
             );
-            const element = createElement('c-product-tile-list', {
+            const element = createElement<ProductTileList>('c-product-tile-list', {
                 is: ProductTileList
             });
             document.body.appendChild(element);
@@ -72,14 +76,14 @@ describe('c-product-tile-list', () => {
             return Promise.resolve()
                 .then(() => {
                     const paginator =
-                        element.shadowRoot.querySelector('c-paginator');
+                        element.shadowRoot.querySelector<Paginator>('c-paginator');
                     paginator.dispatchEvent(new CustomEvent('next'));
                 })
                 .then(() => {
                     // DOM is updated after event is fired so need to wait
                     // another microtask for the rerender
                     const paginator =
-                        element.shadowRoot.querySelector('c-paginator');
+                        element.shadowRoot.querySelector<Paginator>('c-paginator');
                     const currentPage =
                         mockGetProducts.pageNumber + 1;
                     const regex = new RegExp(
@@ -91,7 +95,7 @@ describe('c-product-tile-list', () => {
                 })
                 .then(() => {
                     const paginator =
-                        element.shadowRoot.querySelector('c-paginator');
+                        element.shadowRoot.querySelector<Paginator>('c-paginator');
                     // we're back to the original page number now
                     const regex = new RegExp(
                         `page ${mockGetProducts.pageNumber} of ${totalPages}$`
@@ -102,7 +106,7 @@ describe('c-product-tile-list', () => {
 
         // NOTE: The following fails when converted to an async function
         it('updates getProducts @wire with new pageNumber', () => {
-            const element = createElement('c-product-tile-list', {
+            const element = createElement<ProductTileList>('c-product-tile-list', {
                 is: ProductTileList
             });
             document.body.appendChild(element);
@@ -112,7 +116,7 @@ describe('c-product-tile-list', () => {
             return Promise.resolve()
                 .then(() => {
                     const paginator =
-                        element.shadowRoot.querySelector('c-paginator');
+                        element.shadowRoot.querySelector<Paginator>('c-paginator');
                     paginator.dispatchEvent(new CustomEvent('next'));
                 })
                 .then(() => {
@@ -124,7 +128,7 @@ describe('c-product-tile-list', () => {
 
         it('displays one c-product-tile per record', async () => {
             const recordCount = mockGetProducts.records.length;
-            const element = createElement('c-product-tile-list', {
+            const element = createElement<ProductTileList>('c-product-tile-list', {
                 is: ProductTileList
             });
             document.body.appendChild(element);
@@ -132,12 +136,12 @@ describe('c-product-tile-list', () => {
 
             await Promise.resolve();
             const productTiles =
-                element.shadowRoot.querySelectorAll('c-product-tile');
+                element.shadowRoot.querySelectorAll<ProductTile>('c-product-tile');
             expect(productTiles).toHaveLength(recordCount);
         });
 
         it('sends productSelected event when c-product-tile selected', async () => {
-            const element = createElement('c-product-tile-list', {
+            const element = createElement<ProductTileList>('c-product-tile-list', {
                 is: ProductTileList
             });
             document.body.appendChild(element);
@@ -145,7 +149,7 @@ describe('c-product-tile-list', () => {
 
             await Promise.resolve();
             const productTile =
-                element.shadowRoot.querySelector('c-product-tile');
+                element.shadowRoot.querySelector<ProductTile>('c-product-tile');
             productTile.dispatchEvent(new CustomEvent('selected'));
             expect(publish).toHaveBeenCalledWith(
                 undefined,
@@ -157,21 +161,21 @@ describe('c-product-tile-list', () => {
 
     describe('getProduct @wire emits empty list of records', () => {
         it('does not render paginator', async () => {
-            const element = createElement('c-product-tile-list', {
+            const element = createElement<ProductTileList>('c-product-tile-list', {
                 is: ProductTileList
             });
             document.body.appendChild(element);
             (<ApexTestWireAdapter><unknown>getProducts).emit(mockGetProductsNoRecords);
 
             await Promise.resolve();
-            const paginator = element.shadowRoot.querySelector('c-paginator');
+            const paginator = element.shadowRoot.querySelector<Paginator>('c-paginator');
             expect(paginator).toBeNull();
         });
 
         it('renders placeholder with no products message', async () => {
             const expected =
                 'There are no products matching your current selection';
-            const element = createElement('c-product-tile-list', {
+            const element = createElement<ProductTileList>('c-product-tile-list', {
                 is: ProductTileList
             });
             document.body.appendChild(element);
@@ -179,7 +183,7 @@ describe('c-product-tile-list', () => {
 
             await Promise.resolve();
             const placeholder =
-                element.shadowRoot.querySelector('c-placeholder');
+                element.shadowRoot.querySelector<Placeholder>('c-placeholder');
             expect(placeholder.shadowRoot.textContent).toBe(expected);
         });
     });
@@ -190,7 +194,7 @@ describe('c-product-tile-list', () => {
             // This is the default error message that gets emitted from apex
             // adapters. See @salesforce/wire-service-jest-util for the source.
             const defaultError = 'An internal server error has occurred';
-            const element = createElement('c-product-tile-list', {
+            const element = createElement<ProductTileList>('c-product-tile-list', {
                 is: ProductTileList
             });
             document.body.appendChild(element);
@@ -198,15 +202,15 @@ describe('c-product-tile-list', () => {
             return Promise.resolve()
                 .then(() => {
                     const errorPanel =
-                        element.shadowRoot.querySelector('c-error-panel');
+                        element.shadowRoot.querySelector<ErrorPanel>('c-error-panel');
                     // Click the "Show Details" link to render additional error messages
                     const lightningInput =
-                        errorPanel.shadowRoot.querySelector('a');
+                        errorPanel.shadowRoot.querySelector<HTMLAnchorElement>('a');
                     lightningInput.dispatchEvent(new CustomEvent('click'));
                 })
                 .then(() => {
                     const errorPanel =
-                        element.shadowRoot.querySelector('c-error-panel');
+                        element.shadowRoot.querySelector<ErrorPanel>('c-error-panel');
                     const text = errorPanel.shadowRoot.textContent;
                     expect(text).toContain(defaultError);
                 });
@@ -241,7 +245,7 @@ describe('c-product-tile-list', () => {
 
     describe('with filter changes', () => {
         it('updates product list when filters change', async () => {
-            const element = createElement('c-product-tile-list', {
+            const element = createElement<ProductTileList>('c-product-tile-list', {
                 is: ProductTileList
             });
             document.body.appendChild(element);
@@ -260,7 +264,7 @@ describe('c-product-tile-list', () => {
     });
 
     it('is accessible when products returned', async () => {
-        const element = createElement('c-product-tile-list', {
+        const element = createElement<ProductTileList>('c-product-tile-list', {
             is: ProductTileList
         });
 
@@ -272,7 +276,7 @@ describe('c-product-tile-list', () => {
     });
 
     it('is accessible when no products returned', async () => {
-        const element = createElement('c-product-tile-list', {
+        const element = createElement<ProductTileList>('c-product-tile-list', {
             is: ProductTileList
         });
 
@@ -284,7 +288,7 @@ describe('c-product-tile-list', () => {
     });
 
     it('is accessible when error returned', async () => {
-        const element = createElement('c-product-tile-list', {
+        const element = createElement<ProductTileList>('c-product-tile-list', {
             is: ProductTileList
         });
 

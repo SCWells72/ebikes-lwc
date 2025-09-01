@@ -1,9 +1,9 @@
-@isTest
+@IsTest
 public class TestProductController {
     private static final String PRODUCT_NAME1 = 'Sample Bike 1';
     private static final String PRODUCT_NAME2 = 'Sample Bike 2';
 
-    @testSetup
+    @TestSetup
     static void createProducts() {
         Product_Family__c family = new Product_Family__c(
             Name = 'TestFamily',
@@ -31,7 +31,7 @@ public class TestProductController {
         };
     }
 
-    @isTest
+    @IsTest
     static void getProducts_works() {
         ProductController.Filters filters = new ProductController.Filters();
         filters.searchKey = 'Sample';
@@ -46,7 +46,7 @@ public class TestProductController {
         Assert.areEqual(PRODUCT_NAME1, ((Product__c) result.records[0]).Name);
     }
 
-    @isTest
+    @IsTest
     static void getSimilarProducts_works() {
         Product__c baseProduct = [
             SELECT Id, Name, Product_Family__c

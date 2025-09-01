@@ -48,7 +48,7 @@ describe('c-hero', () => {
         // ending the test and fail the test if the promise rejects.
         await Promise.resolve();
         // Select elements for validation
-        const imageEl = element.shadowRoot.querySelector('img');
+        const imageEl = element.shadowRoot.querySelector<HTMLImageElement>('img');
         expect(imageEl).not.toBeNull();
         // Verify that the URL returned matches, in the context of the test, the domain will render as http://localhost/
         expect(imageEl.src).toBe(
@@ -72,7 +72,7 @@ describe('c-hero', () => {
         // ending the test and fail the test if the promise rejects.
         await Promise.resolve();
         // Select elements for validation
-        const sourceEl = element.shadowRoot.querySelector('source');
+        const sourceEl = element.shadowRoot.querySelector<HTMLSourceElement>('source');
         expect(sourceEl).not.toBeNull();
         // Verify that the URL returned matches, in the context of the test, the domain will render as http://localhost/
         expect(sourceEl.src).toBe(`http://localhost/${mockResourceUrl}`);
@@ -92,7 +92,7 @@ describe('c-hero', () => {
         // ending the test and fail the test if the promise rejects.
         await Promise.resolve();
         // Select elements for validation
-        const divEl = element.shadowRoot.querySelector('div');
+        const divEl = element.shadowRoot.querySelector<HTMLDivElement>('div');
         expect(divEl).not.toBeNull();
         expect(divEl.style.opacity).toBe('0.5');
     });
@@ -124,7 +124,7 @@ describe('c-hero', () => {
         expect(heroDetailsEL.recordName).toBe(
             mockButtonClickProductOrFamilyName
         );
-        const spanEl = element.shadowRoot.querySelector('span');
+        const spanEl = element.shadowRoot.querySelector<HTMLSpanElement>('span');
         expect(spanEl.textContent).toBe(mockButtonText);
     });
 
@@ -155,7 +155,7 @@ describe('c-hero', () => {
         expect(heroDetailsEL.recordName).toBe(
             mockButtonClickProductOrFamilyName
         );
-        const spanEl = element.shadowRoot.querySelector('span');
+        const spanEl = element.shadowRoot.querySelector<HTMLSpanElement>('span');
         expect(spanEl.textContent).toBe(mockButtonText);
     });
 
@@ -185,7 +185,7 @@ describe('c-hero', () => {
         expect(heroDetailsEL.recordName).toBe(
             mockButtonClickProductOrFamilyName
         );
-        const spanEl = element.shadowRoot.querySelector('span');
+        const spanEl = element.shadowRoot.querySelector<HTMLSpanElement>('span');
         expect(spanEl.textContent).toBe(mockButtonText);
     });
 

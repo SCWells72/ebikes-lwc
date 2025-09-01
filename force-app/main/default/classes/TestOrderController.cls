@@ -1,6 +1,6 @@
-@isTest
+@IsTest
 public class TestOrderController {
-    @testSetup
+    @TestSetup
     static void setup() {
         Account acc = new Account(Name = 'Sample Account');
         insert acc;
@@ -18,7 +18,7 @@ public class TestOrderController {
         insert orderItem;
     }
 
-    @isTest
+    @IsTest
     static void testGetOrderItems() {
         Order__c testOrder = [SELECT Id FROM Order__c];
         List<Order_Item__c> orderItems = OrderController.getOrderItems(

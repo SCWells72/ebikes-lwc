@@ -71,10 +71,9 @@ describe('c-order-builder', () => {
         expect((<ApexTestWireAdapter><unknown>getOrderItems).getLastConfig()).toEqual(WIRE_INPUT);
         // Select elements for validation
         const orderItemTileEl =
-            element.shadowRoot.querySelectorAll('c-order-item-tile');
+            element.shadowRoot.querySelectorAll<OrderItemTile>('c-order-item-tile');
         expect(orderItemTileEl.length).toBe(mockGetOrderItems.length);
         // Get the order items to verify they have been set correctly
-        // @ts-expect-error Not sure what's going on here
         const { orderItem } = orderItemTileEl[0];
         expect(orderItem).toEqual(
             expect.objectContaining(mockGetOrderItems[0])
@@ -85,7 +84,7 @@ describe('c-order-builder', () => {
         );
         expect(formattedNumberEl.value).toBe(expectedSum);
         // Get the order total to verify it has been calculated
-        const orderTotalDivEl = element.shadowRoot.querySelector('div.right');
+        const orderTotalDivEl = element.shadowRoot.querySelector<HTMLDivElement>('div.right');
         expect(orderTotalDivEl.textContent).toBe(
             `Total Items: ${expectedItems}`
         );
@@ -136,7 +135,7 @@ describe('c-order-builder', () => {
         );
         expect(formattedNumberEl.value).toBe(expectedSum);
         // Get the order total to verify it has been updated
-        const orderTotalDivEl = element.shadowRoot.querySelector('div.right');
+        const orderTotalDivEl = element.shadowRoot.querySelector<HTMLDivElement>('div.right');
         expect(orderTotalDivEl.textContent).toBe(
             `Total Items: ${expectedItems}`
         );
@@ -163,7 +162,7 @@ describe('c-order-builder', () => {
         expect((<ApexTestWireAdapter><unknown>getOrderItems).getLastConfig()).toEqual(WIRE_INPUT);
         // Select elements for validation
         let orderItemTileEl =
-            element.shadowRoot.querySelectorAll('c-order-item-tile');
+            element.shadowRoot.querySelectorAll<OrderItemTile>('c-order-item-tile');
         orderItemTileEl[0].dispatchEvent(
             new CustomEvent('orderitemdelete', {
                 detail: { id: mockRecordToDeleteId }
@@ -175,7 +174,7 @@ describe('c-order-builder', () => {
 
         // noinspection ReuseOfLocalVariableJS
         orderItemTileEl =
-            element.shadowRoot.querySelectorAll('c-order-item-tile');
+            element.shadowRoot.querySelectorAll<OrderItemTile>('c-order-item-tile');
         // Get the first order item and check that the quantity has ben updated
         expect(orderItemTileEl.length).toBe(mockGetOrderItems.length - 1);
         // Get the formatted number to verify it has been updated
@@ -184,7 +183,7 @@ describe('c-order-builder', () => {
         );
         expect(formattedNumberEl.value).toBe(expectedSum);
         // Get the order total to verify it has been updated
-        const orderTotalDivEl = element.shadowRoot.querySelector('div.right');
+        const orderTotalDivEl = element.shadowRoot.querySelector<HTMLDivElement>('div.right');
         expect(orderTotalDivEl.textContent).toBe(
             `Total Items: ${expectedItems}`
         );

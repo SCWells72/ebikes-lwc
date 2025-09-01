@@ -6,6 +6,7 @@ import PRODUCTS_FILTERED_MESSAGE from '@salesforce/messageChannel/ProductsFilter
 import LightningSlider from 'lightning/slider';
 import LightningInput from 'lightning/input';
 import { TestWireAdapter } from '@salesforce/wire-service-jest-util';
+import ErrorPanel from 'c/errorPanel';
 
 /*
  * Import a snapshot of getPicklistValues' response for functional verification. This eliminates
@@ -54,7 +55,7 @@ describe('c-product-filter', () => {
     describe('filterChange event', () => {
         it('sends message when slider value changes', () => {
             const expectedPrice = 500;
-            const element = createElement('c-product-filter', {
+            const element = createElement<ProductFilter>('c-product-filter', {
                 is: ProductFilter
             });
             document.body.appendChild(element);
@@ -81,7 +82,7 @@ describe('c-product-filter', () => {
 
         it('sends message when search value changes', () => {
             const expectedSearchKey = 'search string';
-            const element = createElement('c-product-filter', {
+            const element = createElement<ProductFilter>('c-product-filter', {
                 is: ProductFilter
             });
             document.body.appendChild(element);
@@ -166,7 +167,7 @@ describe('c-product-filter', () => {
             (<TestWireAdapter><unknown>getPicklistValues).error();
 
             await Promise.resolve();
-            const messages = element.shadowRoot.querySelectorAll('c-error-panel');
+            const messages = element.shadowRoot.querySelectorAll<ErrorPanel>('c-error-panel');
             // One error message per @wire
             expect(messages).toHaveLength(3);
         });

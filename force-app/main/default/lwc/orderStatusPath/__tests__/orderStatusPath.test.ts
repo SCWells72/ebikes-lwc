@@ -43,7 +43,7 @@ describe('c-order-status-path', () => {
     it('displays the path with the right items and selection', async () => {
         // Create initial element
         // noinspection DuplicatedCode
-        const element = createElement('c-order-status-path', {
+        const element = createElement<OrderStatusPath>('c-order-status-path', {
             is: OrderStatusPath
         });
         document.body.appendChild(element);
@@ -80,7 +80,7 @@ describe('c-order-status-path', () => {
     it('changes status when path item is clicked', async () => {
         // Create initial element
         // noinspection DuplicatedCode
-        const element = createElement('c-order-status-path', {
+        const element = createElement<OrderStatusPath>('c-order-status-path', {
             is: OrderStatusPath
         });
         document.body.appendChild(element);
@@ -121,7 +121,7 @@ describe('c-order-status-path', () => {
         await flushPromises();
 
         // Check for error message
-        const errorItem = element.shadowRoot.querySelector(
+        const errorItem = element.shadowRoot.querySelector<HTMLDivElement>(
             '.slds-text-color_error'
         );
         expect(errorItem).not.toBeNull();
@@ -130,7 +130,7 @@ describe('c-order-status-path', () => {
 
     it("displays an error when record data can't be retrieved", async () => {
         // Create initial element
-        const element = createElement('c-order-status-path', {
+        const element = createElement<OrderStatusPath>('c-order-status-path', {
             is: OrderStatusPath
         });
         document.body.appendChild(element);
@@ -142,7 +142,7 @@ describe('c-order-status-path', () => {
         await flushPromises();
 
         // Check for error message
-        const errorItem = element.shadowRoot.querySelector(
+        const errorItem = element.shadowRoot.querySelector<HTMLDivElement>(
             '.slds-text-color_error'
         );
         expect(errorItem).not.toBeNull();
@@ -152,7 +152,7 @@ describe('c-order-status-path', () => {
     describe('empApi', () => {
         it('updates path when platform event is received', async () => {
             // Create initial element
-            const element = createElement('c-order-status-path', {
+            const element = createElement<OrderStatusPath>('c-order-status-path', {
                 is: OrderStatusPath
             });
             document.body.appendChild(element);
@@ -193,7 +193,7 @@ describe('c-order-status-path', () => {
             empApiMock.setMockEmpEnabled(false);
 
             // Create initial element
-            const element = createElement('c-order-status-path', {
+            const element = createElement<OrderStatusPath>('c-order-status-path', {
                 is: OrderStatusPath
             });
             document.body.appendChild(element);
@@ -203,7 +203,7 @@ describe('c-order-status-path', () => {
 
             // Check for error message
             expect(isEmpEnabled).toHaveBeenCalled();
-            const errorItem = element.shadowRoot.querySelector(
+            const errorItem = element.shadowRoot.querySelector<HTMLDivElement>(
                 '.slds-text-color_error'
             );
             expect(errorItem).not.toBeNull();
@@ -212,7 +212,7 @@ describe('c-order-status-path', () => {
 
         it('displays an error when EMP API reports an error', async () => {
             // Create initial element
-            const element = createElement('c-order-status-path', {
+            const element = createElement<OrderStatusPath>('c-order-status-path', {
                 is: OrderStatusPath
             });
             document.body.appendChild(element);
@@ -228,7 +228,7 @@ describe('c-order-status-path', () => {
 
             // Check for error message
             expect(onError).toHaveBeenCalled();
-            const errorItem = element.shadowRoot.querySelector(
+            const errorItem = element.shadowRoot.querySelector<HTMLDivElement>(
                 '.slds-text-color_error'
             );
             expect(errorItem).not.toBeNull();
@@ -240,7 +240,7 @@ describe('c-order-status-path', () => {
             empApiMock.setMockSubscribeError('mock subscribe error');
 
             // Create initial element
-            const element = createElement('c-order-status-path', {
+            const element = createElement<OrderStatusPath>('c-order-status-path', {
                 is: OrderStatusPath
             });
             document.body.appendChild(element);
@@ -250,7 +250,7 @@ describe('c-order-status-path', () => {
 
             // Check for error message
             expect(subscribe).toHaveBeenCalled();
-            const errorItem = element.shadowRoot.querySelector(
+            const errorItem = element.shadowRoot.querySelector<HTMLDivElement>(
                 '.slds-text-color_error'
             );
             expect(errorItem).not.toBeNull();
@@ -259,7 +259,7 @@ describe('c-order-status-path', () => {
     });
 
     it('is accessible', async () => {
-        const element = createElement('c-order-status-path', {
+        const element = createElement<OrderStatusPath>('c-order-status-path', {
             is: OrderStatusPath
         });
 
