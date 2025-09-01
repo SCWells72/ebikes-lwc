@@ -5,13 +5,10 @@
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
     <description>PMD AppExchange rules.</description>
 
-    <!-- Reference entire rulesets or individual rules as appropriate -->
-    <rule ref="category/apex/sfca_apex_security.xml"/>
-    <!--<rule ref="category/apex/sfca_apex_security.xml/AvoidUnsafeSystemSetPassword"/>-->
-
-    <rule ref="category/html/sfca_html_security.xml"/>
-    <rule ref="category/ecmascript/sfca_ecmascript_security.xml"/>
-    <rule ref="category/visualforce/sfca_visualforce_security.xml"/>
-    <rule ref="category/xml/sfca_xml_security.xml"/>
+    <rule ref="sfca/rulesets/AppExchange_apex.xml"/>
+    <rule ref="sfca/rulesets/AppExchange_html.xml"/>
+    <rule ref="sfca/rulesets/AppExchange_javascript.xml"/>
+    <rule ref="sfca/rulesets/AppExchange_visualforce.xml"/>
+    <rule ref="sfca/rulesets/AppExchange_xml.xml"/>
 
 </ruleset>
