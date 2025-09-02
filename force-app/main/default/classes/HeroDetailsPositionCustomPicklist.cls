@@ -1,4 +1,3 @@
-@SuppressWarnings('ApexUnusedDeclaration')
 global class HeroDetailsPositionCustomPicklist extends VisualEditor.DynamicPickList {
     global override VisualEditor.DataRow getDefaultValue() {
         VisualEditor.DataRow defaultValue = new VisualEditor.DataRow(
