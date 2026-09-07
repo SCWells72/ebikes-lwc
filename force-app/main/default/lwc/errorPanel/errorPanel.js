@@ -21,7 +21,8 @@ export default class ErrorPanel extends LightningElement {
     }
     render() {
         // noinspection NonBlockStatementBodyJS
-        if (this.type === 'inlineMessage') return inlineMessage;
+        if (this.type === 'inlineMessage')
+            return inlineMessage;
         return noDataIllustration;
     }
 }
